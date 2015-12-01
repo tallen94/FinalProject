@@ -29,3 +29,13 @@ nav a {
 	font-family: "Courier New";
 }
 
+.signUpImg {
+	height: 20%;
+	width: 100%;
+	padding: 3px;
+}
+
+#signUp {
+	padding: 10px;
+	text-align: center;
+}

@@ -1,0 +1,28 @@
+@import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
+@import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
+
+#pic1, #pic2, #pic3 {
+	float: left;
+	width: 250px;
+	height: 180px;
+	display: block;
+}
+
+#pic4, #pic5, #pic6 {
+	float: right;
+	width: 250px;
+	height: 180px;
+	display: block;
+}
+
+h1 {
+	font-weight: 30px;
+	font-size: 4em;
+	text-align: center;
+	margin: 30px;
+}
+
+#login {
+	border: 1px solid;
+	border-color: grey;
+}

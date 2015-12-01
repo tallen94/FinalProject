@@ -1,0 +1,43 @@
+<head>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css"/>
+	<link rel="stylesheet" href="../css/main.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
+</head>
+<h1>Lunch Date</h1>
+<div class="container" ng-controller="signUpCtrl">
+	<div class="row">
+		<div class="col-sm-3" class="hidden-xs">
+			<img src="../images/signup1.jpg">
+			<img src="../images/signup2.jpg">
+			<img src="../images/signup3.jpg">
+		</div>
+		<div class="col-sm-6">
+			<h2>Sign Up</h2>
+			<form name="signupForm">
+				<div class="form-group">
+					<input class="form-control" name="firstName" type="text" placeholder="First Name" required>
+				</div>
+				<div class="form-group">
+					<input class="form-control" name="lastName" type="text" placeholder="Last Name" required>
+				</div>
+				<div class="form-group">
+					<input class="form-contorl" name="email" type="email" placeholder="Email" required>
+				</div>
+				<div class="form-group">
+					<input class="form-control" name="password" type="password" placeholder="Password" required>
+				</div>
+				<div class="form-group">
+					<input class="form-control" name="confirm" type="passowrd" placeholder="Re-Passowrd" required>
+				</div>
+
+				<button class="btn btn-primary" type="submit"  ng-disabled="signupForm.$invalid">Sign Up</button>
+			</form>
+			<a>Already have an account?</a>
+		</div>
+		<div class="col-sm-3" class="hidden-xs">
+			<img src="../images/signup4.jpg">
+			<img src="../images/signup5.jpg">
+			<img src-"../images/signup6.jpg">
+		</div>
+	</div>
+</div>

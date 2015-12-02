@@ -36,6 +36,10 @@ nav a {
 }
 
 #signUp {
-	padding: 10px;
+	padding-left: 10%;
+	padding-right: 10%;
+	padding-top: 8%;
+	padding-bottom: 8%;
 	text-align: center;
+	border-style: solid;
 }

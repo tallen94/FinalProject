@@ -1,10 +1,11 @@
 "use strict";
 
-angular.module("LunchDate", ["ui.router", "ngSanitize"])
+angular.module('LunchDate', ['ui.router', 'ngSanitize'])
 .config(function($stateProvider) {
 	$stateProvider
+
 		.state('home', {
-			url: '/home',
+			url: '/',
 			templateUrl: 'partials/home.html',
 			controller: 'HomeCtrl'
 		})
@@ -32,4 +33,20 @@ angular.module("LunchDate", ["ui.router", "ngSanitize"])
 	$scope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
 		$scope.uiRouterState = $state;
 	});
+}])
+
+.controller("HomeCtrl", ['$scope', function() {
+
+}])
+
+.controller("LoginCtrl", ['$scope', function() {
+	
+}])
+
+.controller("SignupCtrl", ['$scope', function() {
+	
+}])
+
+.controller("CreateLunchDateCtrl", ['$scope', function() {
+	
 }])

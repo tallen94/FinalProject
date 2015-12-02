@@ -1,7 +1,7 @@
 <link rel="stylesheet" href="../css/login.css"/>
 <link rel="stylesheet" href="../css/main.css"/>
 
-<div ng-controller="LoginCtrl">
+<div ng-controller="LoginCtrl" id="login">
 	<h1 class="title">Lunch Date</h1>
 
 	<div class = "container">
@@ -10,11 +10,11 @@
 		    <div class="row"><img id = "pic2" src = "../images/login2.jpg"></div>
 		    <div class="row"><img id = "pic3" src = "../images/login3.jpg"></div>
 		</div>
-		<div class="col-sm-12 col-md-4 text-center" id="login">
+		<div class="col-sm-12 col-md-4 text-center" id="box">
 			<h2>Login</h2>
-			<input type='text' name='username' id='username' placeholder='Username' required></input>
-			<input type='password' name='password' id='password' placeholder='Password' required></input>
-			<button class="btn btn-warning btn-sm btn-block" id='submit' type="submit">Login</button>
+			<input type='text' name='username' id='username' placeholder=' Username' required></input>
+			<input type='password' name='password' id='password' placeholder=' Password' required></input>
+			<button class="btn btn-warning btn-sm" id='submit' type="submit">Login</button>
 			<p>Don't have an account?</P>
 			<p>Learn More</p>
 		</div>

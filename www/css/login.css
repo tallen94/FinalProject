@@ -6,7 +6,7 @@
 	float: left;
 	width: 250px;
 	height: 180px;
-	padding-bottom: 2px;
+	margin-bottom: 2px;
 	display: block;
 }
 
@@ -14,7 +14,7 @@
 	float: right;
 	width: 250px;
 	height: 180px;
-	padding-bottom: 2px;
+	margin-bottom: 2px;
 	display: block;
 }
 
@@ -25,21 +25,23 @@
 	margin: 30px;
 }
 
+#login h2 {
+	margin: 1.5em;
+}
+
 #box {
-	margin-top: auto;
-	margin-bottom: auto;
-	height: 350px;
+	margin-top: 5em;
 	border: 1px solid;
 	border-color: grey;
 	font-family: helvetica;
 }
 
-
-#submit {
-	width: 80%;
-}
-
-#username, #password {
+#username, #password, #submit {
 	width: 80%;
 	margin-bottom: 1em;
+}
+
+#signUp {
+	color: grey;
+	margin-bottom: 4em;
 }

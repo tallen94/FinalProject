@@ -1,15 +1,12 @@
 @import url(https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
 
-body {
-	background-color: #dbdce3;
-}
-
 
 #pic1, #pic2, #pic3 {
 	float: left;
 	width: 250px;
 	height: 180px;
+	margin-bottom: 2px;
 	display: block;
 }
 
@@ -17,21 +14,34 @@ body {
 	float: right;
 	width: 250px;
 	height: 180px;
+	margin-bottom: 2px;
 	display: block;
 }
 
-.title {
+#login h1 {
 	font-weight: 30px;
 	font-size: 5em;
 	text-align: center;
 	margin: 30px;
 }
 
-#login {
-	margin-top: auto;
-	margin-bottom: auto;
-	height: 350px;
+#login h2 {
+	margin: 1.5em;
+}
+
+#box {
+	margin-top: 5em;
 	border: 1px solid;
 	border-color: grey;
 	font-family: helvetica;
+}
+
+#username, #password, #submit {
+	width: 80%;
+	margin-bottom: 1em;
+}
+
+#signUp {
+	color: grey;
+	margin-bottom: 4em;
 }

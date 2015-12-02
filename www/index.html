@@ -16,12 +16,18 @@
 	<body>
 		<nav>
 			<h2 class="title">Lunch Date</h2>
-			<ul ng-show="uiRouterState.current.name != 'login' || uiRouterState.current.name != 'signup'" class="list-unstyled list-inline">
+			<ul class="list-unstyled list-inline">
 				<li><a ui-sref="home">home</a></li>
 				<li><a ui-sref="profile">profile</a></li>
 				<li><a ui-sref="logout">logout</a></li>
 			</ul>
 		</nav>
+
+		<div class="container">
+			<main>
+				<div ui-view></div>
+			</main>
+		</div>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.js"></script>

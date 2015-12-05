@@ -1,15 +1,52 @@
+<style>
+    @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
+    @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
+
+    .form-group {
+        padding-right: 30%;
+        padding-left: 30%;
+    }
+
+    #btnDiv {
+        margin-top: 5%;
+        text-align: center;
+    }
+
+    #createDate {
+        background: white;
+        border-style: solid;
+        font-size: 20px;
+    }
+
+    h1 {
+        text-align: center;
+    }
+
+</style>
 <div ng-controller="createLunchDateCtrl">
-  <h1>Create Lunch Date </h1>
-  <form>
-    <label>Resturaunt</label>
-    <input type="text"></input>
-    <label>Date</label>
-    <input type="text"></input>
-    <label>Time</label>
-    <input type="text"></input>
-    <label>Description</label>
-    <textarea></textarea>
-    <button>Create a Date</button>
-  </form>
+    <h1>Create Lunch Date</h1>
+    <form>
+        <div class="form-group">
+            <label>Resturaunt</label>
+            <input type="text" class="form-control"/>
+        </div>
+        <div class="form-group">
+            <label>Date</label>
+            <input type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Time</label>
+            <input type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <textarea class="form-control"></textarea>
+        </div>
+        
+        <div class="form-group" id="btnDiv">
+            <button id="createDate" type="submit" >Create a Date</button>
+        </div>
+        
+    </form>
   
 </div>

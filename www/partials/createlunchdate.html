@@ -3,8 +3,9 @@
     @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
 
     .form-group {
-        padding-right: 30%;
-        padding-left: 30%;
+        padding-right: 40%;
+        padding-left: 40%;
+        margin-top: 2%;
     }
 
     #btnDiv {
@@ -16,19 +17,54 @@
         background: white;
         border-style: solid;
         font-size: 20px;
+        padding: 5%;
     }
 
     h1 {
         text-align: center;
+        margin-bottom: 3%;
+        font-size: 36pt;
+    }
+
+    #resturaunt div {
+        padding-left: 0;
+        padding-right: 0;       
+    }
+
+    #resturaunt {
+        margin-bottom: 1%;
+        padding-right: 37%;
+    }
+
+    #searchIcon {
+        font-size: 1.5em;
+    }
+
+    #searchButton {
+        background: white;
+        border-style: none;
+        padding-top: 0.3em;
+        float: right;
+    }
+    #searchInput {
+        width: 86%;
+        border-radius: 4px;
+        border: 1px solid #ccc;
+        box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+        transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+        height: 34px;
     }
 
 </style>
 <div ng-controller="createLunchDateCtrl">
     <h1>Create Lunch Date</h1>
     <form>
-        <div class="form-group">
+        <div class="form-group" id="resturaunt">
             <label>Resturaunt</label>
-            <input type="text" class="form-control"/>
+            <div >
+                <input id="searchInput" type="text"  />
+                <button id="searchButton"><span id="searchIcon" class="glyphicon glyphicon-search"></span></button>
+            </div>
         </div>
         <div class="form-group">
             <label>Date</label>
@@ -40,7 +76,7 @@
         </div>
         <div class="form-group">
             <label>Description</label>
-            <textarea class="form-control"></textarea>
+            <textarea rows="5" class="form-control"></textarea>
         </div>
         
         <div class="form-group" id="btnDiv">

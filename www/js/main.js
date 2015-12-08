@@ -53,7 +53,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize'].run(function() {
 .controller("SignupCtrl", ['$scope', function() {
 
 	$scope.signup = function(photo, fName, lName, passwd, email) {
-		var user = 
+		//var user = 
 	}
 	
 }])

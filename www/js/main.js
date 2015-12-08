@@ -54,6 +54,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'firebase'].run(function
 	
 }])
 
-.controller("CreateLunchDateCtrl", ['$scope', function() {
-	
+.controller("CreateLunchDateCtrl", ['$scope', '$http', function($scope, $http) {
+    $scope.getDataFromYelp = function () {
+        $http.get('https://api.yelp.com/v2/search?term=food&location=')
+    }
 }])

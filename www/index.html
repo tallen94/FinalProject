@@ -17,9 +17,10 @@
 		<nav>
 			<h2 class="title">Lunch Date</h2>
 			<ul class="list-unstyled list-inline">
-				<li><a ui-sref="home">home</a></li>
+				<!-- <li><a ui-sref="home">home</a></li>
 				<li><a ui-sref="profile">profile</a></li>
-				<li><a ui-sref="logout">logout</a></li>
+				<li><a ui-sref="logout">logout</a></li> -->
+				<li ng-repeat="tab in tabs"><a ui-sref="{{tab}}">{{tab}}</a></li>
 			</ul>
 		</nav>
 

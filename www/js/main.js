@@ -1,11 +1,11 @@
 "use strict";
 
 angular.module('LunchDate', ['ui.router', 'ngSanitize'])
-.config(function($stateProvider) {
+.config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider
 
 		.state('home', {
-			url: '/',
+			url: '/home',
 			templateUrl: 'partials/home.html',
 			controller: 'HomeCtrl'
 		})
@@ -23,24 +23,25 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize'])
 			url: '/create-date',
 			templateUrl: 'createlunchdate.html',
 			controller: 'CreateLunchDateCtrl'
-		})
+		});
+
+		$urlRouterProvider.otherwise('/login');
 })
 
-.controller("MainCtrl", ['$scope', '$state', function($scope, $state) {
-
-	$scope.uiRouterState = $state;
-
-	$scope.$on("$stateChangeStart", function(event, toState, toParams, fromState, fromParams) {
-		$scope.uiRouterState = $state;
-	});
+.controller("MainCtrl", ['$scope', function($scope) {
+	$scope.tabs;
 }])
 
-.controller("HomeCtrl", ['$scope', function() {
-
+.controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+		$rootScope.tabs = ['home', 'profile', 'logout'];
+	})
 }])
 
-.controller("LoginCtrl", ['$scope', function() {
-	
+.controller("LoginCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+		$rootScope.tabs = ['login', 'signup'];
+	})
 }])
 
 .controller("SignupCtrl", ['$scope', function() {

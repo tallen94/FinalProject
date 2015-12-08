@@ -4,7 +4,7 @@
 
 #pic1, #pic2, #pic3 {
 	float: left;
-	width: 250px;
+	width: 270px;
 	height: 180px;
 	margin-bottom: 2px;
 	display: block;
@@ -12,7 +12,7 @@
 
 #pic4, #pic5, #pic6 {
 	float: right;
-	width: 250px;
+	width: 270px;
 	height: 180px;
 	margin-bottom: 2px;
 	display: block;
@@ -27,6 +27,7 @@
 
 #login h2 {
 	margin: 1.5em;
+	font-size: 30px;
 }
 
 #box {
@@ -37,11 +38,17 @@
 }
 
 #username, #password, #submit {
-	width: 80%;
+	width: 100%;
 	margin-bottom: 1em;
 }
 
 #noAccount {
 	color: grey;
+	text-decoration: none;
 	margin-bottom: 4em;
+}
+
+a:hover {
+	color: grey;
+	text-decoration: none;
 }

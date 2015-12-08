@@ -33,14 +33,14 @@ nav a {
 	float: right;
 	height: 180px;
 	width: 270px;
-	padding: 3px;
+	margin-bottom: 2px;
 }
 
 .signUpImgRight {
 	float: left;
 	height: 180px;
 	width: 270px;
-	padding: 3px;
+	margin-bottom: 2px;
 }
 
 #signUp {

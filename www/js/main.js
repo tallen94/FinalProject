@@ -64,7 +64,9 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 		user.set('lName', lName);
 		user.set('email', email);
 		user.set('photo', photo);
-	}	
+	}
+};
+ 
 }])
 
 .controller("CreateLunchDateCtrl", ['$scope', '$http', function($scope, $http) {

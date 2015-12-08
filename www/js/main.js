@@ -53,9 +53,12 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 .controller("SignupCtrl", ['$scope', function() {
 
 	$scope.signup = function(photo, fName, lName, passwd, email) {
-		//var user = 
-	}
-	
+		var user = new Parse.User();
+		user.set('fName', fName);
+		user.set('lName', lName);
+		user.set('email', email);
+		user.set('photo', photo);
+	}	
 }])
 
 .controller("CreateLunchDateCtrl", ['$scope', function() {

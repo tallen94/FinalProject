@@ -50,14 +50,21 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 	})
 }])
 
-.controller("SignupCtrl", ['$scope', function() {
+
+.controller("SignupCtrl", ['$scope', function($scope) {
+	$scope.newUser = {};
 
 	$scope.signup = function(photo, fName, lName, passwd, email) {
-		//var user = 
-	}
-	
+		var user = new Parse.User();
+		user.set('fName', fName);
+		user.set('lName', lName);
+		user.set('email', email);
+		user.set('photo', photo);
+	}	
 }])
 
-.controller("CreateLunchDateCtrl", ['$scope', function() {
-	
+.controller("CreateLunchDateCtrl", ['$scope', '$http', function($scope, $http) {
+    $scope.getDataFromYelp = function () {
+        $http.get('https://api.yelp.com/v2/search?term=food&location=')
+    }
 }])

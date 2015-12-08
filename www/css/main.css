@@ -55,3 +55,10 @@ nav a {
 #submit {
 	width: 100%;
 }
+
+.profilePic {
+	max-width:150px;
+	max-height:150px;
+	border-radius: 50%;
+	padding-bottom: 5px;
+}

@@ -44,8 +44,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize'])
 	})
 }])
 
-.controller("SignupCtrl", ['$scope', function() {
-	
+.controller("SignupCtrl", ['$scope', function($scope) {
+	$scope.newUser = {};
 }])
 
 .controller("CreateLunchDateCtrl", ['$scope', function() {

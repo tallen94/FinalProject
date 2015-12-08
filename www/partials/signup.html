@@ -15,22 +15,22 @@
                     <input class="form-control" id="profilePic" name="profilePic" placeholder="Profile Picture URL" ng-model="newUser.profilePic">
                 </div>
                 <div class="form-group">
-					<input class="form-control" name="firstName" type="text" placeholder="First Name" required>
+					<input class="form-control" name="firstName" type="text" placeholder="First Name" required ng-model="newUser.firstName">
 				</div>
 				<div class="form-group">
-					<input class="form-control" name="lastName" type="text" placeholder="Last Name" required>
+					<input class="form-control" name="lastName" type="text" placeholder="Last Name" required ng-model="newUser.lastName">
 				</div>
 				<div class="form-group">
-					<input class="form-control" name="email" type="email" placeholder="Email" required>
+					<input class="form-control" name="email" type="email" placeholder="Email" required ng-model="newUser.email">
 				</div>
 				<div class="form-group">
-					<input class="form-control" name="password" type="password" placeholder="Password" required>
+					<input class="form-control" name="password" type="password" placeholder="Password" required ng-model="newUser.password">
 				</div>
 				<div class="form-group">
 					<input class="form-control" name="confirm" id="password" type="password" placeholder="Re-Password" same-as="password" required>
 				</div>
 
-				<button class="btn btn-primary" type="submit" id="submit" ng-disabled="signupForm.$invalid">Sign Up</button>
+				<button class="btn btn-primary" type="submit" id="submit" ng-disabled="signupForm.$invalid" ng-click="signup(newUser.profilePic, newUser.firstName, newUser.lastName, newUser.password, newUser.email)">Sign Up</button>
 			</form>
 			<a>Already have an account?</a>
 		</div>

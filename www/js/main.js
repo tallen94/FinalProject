@@ -54,7 +54,11 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 .controller("SignupCtrl", ['$scope', function($scope) {
 	$scope.newUser = {};
 
+
 	$scope.signup = function(photo, fName, lName, passwd, email) {
+		if(photo == null) {
+			photo = "images/default-profile.png";
+		}
 		var user = new Parse.User();
 		user.set('fName', fName);
 		user.set('lName', lName);

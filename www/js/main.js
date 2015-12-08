@@ -1,8 +1,10 @@
 "use strict";
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize', 'firebase'].run(function() {
+var LunchDate = Parse.Object.extend("LunchDate");
 
-}))
+angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
+	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
+})
 .config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider
 
@@ -42,16 +44,23 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'firebase'].run(function
 
 .controller("LoginCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
 	$scope.showInfo = false;
-	
+
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
 		$rootScope.tabs = ['login', 'signup'];
 	})
 }])
 
-.controller("SignupCtrl", ['$scope', function() {
 
+.controller("SignupCtrl", ['$scope', function($scope) {
+	$scope.newUser = {};
 
-	
+	$scope.signup = function(photo, fName, lName, passwd, email) {
+		var user = new Parse.User();
+		user.set('fName', fName);
+		user.set('lName', lName);
+		user.set('email', email);
+		user.set('photo', photo);
+	}	
 }])
 
 .controller("CreateLunchDateCtrl", ['$scope', '$http', function($scope, $http) {

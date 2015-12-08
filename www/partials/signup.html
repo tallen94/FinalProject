@@ -7,12 +7,13 @@
 	<h1 class="title">Lunch Date</h1>
 	<div class="row">
 		<div class="col-sm-3 hidden-xs">
-			<img src="../images/signup1.jpg" class="signUpImg"> 
-			<img src="../images/signup2.jpg" class="signUpImg"> 
-			<img src="../images/signup3.jpg" class="signUpImg">
+			<img src="../images/signup1.jpg" class="signUpImgLeft"> 
+			<img src="../images/signup2.jpg" class="signUpImgLeft"> 
+			<img src="../images/signup3.jpg" class="signUpImgLeft">
 		</div>
 		<div class="col-sm-6" id="signUp">
 			<h2>Sign Up</h2>
+            <img>
 			<form name="signupForm">
 				<div class="form-group">
 					<input class="form-control" name="firstName" type="text" placeholder="First Name" required>
@@ -27,17 +28,17 @@
 					<input class="form-control" name="password" type="password" placeholder="Password" required>
 				</div>
 				<div class="form-group">
-					<input class="form-control" name="confirm" type="password" placeholder="Re-Passowrd" required>
+					<input class="form-control" name="confirm" id="password" type="password" placeholder="Re-Password" same-as="password" required>
 				</div>
 
-				<button class="btn btn-primary" type="submit"  ng-disabled="signupForm.$invalid">Sign Up</button>
+				<button class="btn btn-primary" type="submit" id="submit" ng-disabled="signupForm.$invalid">Sign Up</button>
 			</form>
 			<a>Already have an account?</a>
 		</div>
 		<div class="col-sm-3 hidden-xs">
-			<img src="../images/signup4.jpg" class="signUpImg"> 
-			<img src="../images/signup5.jpg" class="signUpImg"> 
-			<img src="../images/signup6.jpg" class="signUpImg">
+			<img src="../images/signup4.jpg" class="signUpImgRight"> 
+			<img src="../images/signup5.jpg" class="signUpImgRight"> 
+			<img src="../images/signup6.jpg" class="signUpImgRight">
 		</div>
 	</div>
 </div>

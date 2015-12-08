@@ -1,6 +1,8 @@
 "use strict";
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize'])
+angular.module('LunchDate', ['ui.router', 'ngSanitize', 'firebase'].run(function() {
+
+}))
 .config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider
 
@@ -39,12 +41,16 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize'])
 }])
 
 .controller("LoginCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+	$scope.showInfo = false;
+	
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
 		$rootScope.tabs = ['login', 'signup'];
 	})
 }])
 
 .controller("SignupCtrl", ['$scope', function() {
+
+
 	
 }])
 

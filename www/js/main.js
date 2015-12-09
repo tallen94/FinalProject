@@ -67,8 +67,11 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 	}	
 }])
 
-.controller("CreateLunchDateCtrl", ['$scope', '$http', function($scope, $http) {
+.controller("CreateLunchDateCtrl", ['$scope', '$http', function ($scope, $http) {
+
+    var auth = '&oauth_consumer_key=K0ob-D0DVMeZWhaVRPndTQ&oauth_token=4xhBk5ghw4vRGKps5TyqHonrYMDRO1CW&oauth_signature_method=hmac-sha1&oauth_signature=Qa3E4C2Y7kbehy_pf_uMyGCq49gD';
+
     $scope.getDataFromYelp = function () {
-        $http.get('https://api.yelp.com/v2/search?term=food&location=')
+        $http.get('https://api.yelp.com/v2/search?term=food&location=San+Francisco' + auth)
     }
 }])

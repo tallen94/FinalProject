@@ -84,3 +84,9 @@ input.ng-invalid.ng-touched {
 	border: 2px solid red;
 	background-color: #ffb3b3;
 }
+
+.search {
+	width: 20%;
+	position: inline;
+	padding-right: 3px;
+}

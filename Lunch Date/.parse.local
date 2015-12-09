@@ -1,0 +1,11 @@
+{
+  "applications": {
+    "Lunch Date": {
+      "parseAppId": "uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6",
+      "herokuAppId": "6e0bcec3-d664-4e95-bb6f-3c393fe04a0f"
+    },
+    "_default": {
+      "link": "Lunch Date"
+    }
+  }
+}

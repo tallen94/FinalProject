@@ -17,7 +17,10 @@ app.use(express.static(__dirname + '/public'));
 
 // Catch all unknown routes.
 app.all('/', function(request, response) {
-  response.status(404).send('Page not found.');
+  	response.status(404).send('Page not found.');
+  	res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Cache-Control, Pragma, Origin, Authorization, Content-Type, X-Requested-With");
+    res.header("Access-Control-Allow-Methods", "GET, PUT, POST");
 });
 /*
  * Launch the HTTP server

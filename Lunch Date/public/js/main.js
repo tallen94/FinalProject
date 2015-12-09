@@ -32,8 +32,26 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 		$urlRouterProvider.otherwise('/login');
 })
 
-.controller("MainCtrl", ['$scope', function($scope) {
+.controller("MainCtrl", ['$scope', '$http', function($scope, $http) {
 	$scope.tabs;
+
+	var request = {
+		method: 'GET',
+		url: 'search',
+		params: {
+			term: 'lunch',
+			location: 'Seattle'
+		}
+	};
+
+	Parse.Cloud.run('yelpApi', request, {
+		success: function(response) {
+			console.log(response.body);
+		}, 
+		error: function(error) {
+			console.log(error);
+		}
+	});
 }])
 
 .controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {

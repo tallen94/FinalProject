@@ -74,5 +74,9 @@ nav a {
 #noAccount {
 	color: grey;
 	text-decoration: none;
-	margin-bottom: 4em;
+}
+
+input.ng-invalid.ng-touched {
+	border: 2px solid red;
+	background-color: #ffb3b3;
 }

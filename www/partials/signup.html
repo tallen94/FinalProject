@@ -26,8 +26,8 @@
 					<input class="form-control" name="password" type="password" placeholder="Password" required ng-model="newUser.password">
 				</div>
 				<div class="form-group">
-					<input class="form-control" name="confirm" id="password" type="password" placeholder="Re-Password" required>
-					<p ng-show="signupForm.confirm.$invalid">Password is not the same</p>
+					<input class="form-control" name="confirm" id="password" type="password" placeholder="Re-Password" required ng-model="newUser.confirm" same-as="newUser.password">
+					<p ng-show="signupForm.confirm.$invalid && signupForm.confirm.$touched">Passwords do not match</p>
 				</div>
 
 				<button class="btn btn-primary" type="submit" id="submit" ng-disabled="signupForm.$invalid" ng-click="signup(newUser.profilePic, newUser.firstName, newUser.lastName, newUser.password, newUser.email)">Sign Up</button>

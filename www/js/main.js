@@ -67,10 +67,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 	}	
 }])
 
-.controller("CreateLunchDateCtrl", ['$scope', '$http', function($scope, $http) {
-    $scope.getDataFromYelp = function () {
-        $http.get('https://api.yelp.com/v2/search?term=food&location=')
-    }
+.controller("CreateLunchDateCtrl", ['$scope', '$http', function ($scope, $http) {
+
 }])
 
 .directive('sameAs', function() {

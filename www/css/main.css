@@ -25,6 +25,10 @@ nav a {
 	font-weight: 300;
 }
 
+.title {
+	font-family: "Courier New";
+}
+
 .header {
 	font-family: "Courier New";
 	font-weight: 30px;

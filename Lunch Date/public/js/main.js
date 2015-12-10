@@ -216,6 +216,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 
 }])
 
+.controller("ProfileCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+	
+}])
+
 .directive('sameAs', function() {
     return {
         require: 'ngModel',

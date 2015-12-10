@@ -88,12 +88,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 		tick();
 		$interval(tick, 1000 * 60);
 	})
-<<<<<<< HEAD
-
-	$scope.dates = [{resturaunt: "something", date: "sometime", time: "some other time", desc: "something else"}, {resturaunt: "something", date: "sometime", time: "some other time", desc: "something else"}];
-
-=======
->>>>>>> db162865200542d0bdc849cb0d1d3829ad663e95
 }])
 
 .controller("LoginCtrl", ['$scope', '$state', function($scope, $state) {
@@ -176,11 +170,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 
     }
 }])
-<<<<<<< HEAD
-.controller("ProfileCtrl", ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
-	$scope.currentUser = $rootScope.currentUser;
-	console.log($rootScope.currentUser);
-=======
+
 .controller("ProfileCtrl", ['$scope', '$state', function($scope, $state) {
 	$scope.currentUser = {};
 
@@ -190,7 +180,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 		$scope.currentUser.photo = currentUser.get('photo');
 	})
 
->>>>>>> db162865200542d0bdc849cb0d1d3829ad663e95
 	$scope.logout = function() {
 		if(currentUser) {
 			Parse.User.logOut();

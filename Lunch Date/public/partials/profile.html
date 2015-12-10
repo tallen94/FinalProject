@@ -1,7 +1,8 @@
-<div class="container">
-	<button type="button" class="btn btn-default" id="logout" ng-click="logout()">Logout</button>
+<div class="container" id="profileData">
+	
 	<h1>Your Profile</h1>
-	<img src="{{currentUser.photo}}">
+	<img src="{{currentUser.photo}}" id="profileDisp">
 	<h2>{{currentUser.fName}} {{currentUser.lName}}</h2>
+	<button type="button" class="btn btn-default" id="logout" ng-click="logout()">Logout</button>
 </div>
 	

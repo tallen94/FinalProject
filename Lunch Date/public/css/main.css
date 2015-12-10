@@ -102,19 +102,30 @@ svg {
 
 #datesBox {
 	background-color: #E9EAEE;
+	overflow: scroll;
+	max-height: 400px; 
 }
 
 #options {
 	margin-left: 30px;
 }
 
-#map-container {
-	height: 200px;
+#logout {
+	color: red;
+	margin-top: 10em;
+	width: 250px;
+	border: solid red;
+	font-weight: bold;
 }
 
-#logout {
-	float: right;
-	margin-top: 5px;
+#profileDisp {
+	height: 200px;
+	width: 300px;
+	border-radius: 10%;
+}
+
+#profileData {
+	text-align: center;
 }
 
 @media (max-width: 768px) {

@@ -3,7 +3,7 @@
 var LunchDate = Parse.Object.extend("LunchDate");
 var currentUser;
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
+angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet-directive'])
 .run(function() {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
 	currentUser = Parse.User.current();

@@ -1,6 +1,6 @@
 <div>
 	<h2>Search for Dates:</h2>
-	<input name="foodSearch" placeholder="Find: tacos" class="form-control search" id="search">
+	<input name="foodSearch" placeholder="Find: tacos" class="form-control search" id="search" ng-model="food">
 	<input name="locationSearch" placeholder="Near: Seattle, WA" class="form-control search">
 	<svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 		 width="30.239px" height="30.239px" viewBox="0 0 30.239 30.239" style="enable-background:new 0 0 30.239 30.239;"
@@ -20,7 +20,7 @@
 		<div class="col-sm-8" id="datesBox">
 			<div ng-if="dates">
 				<table class="table">
-					<tr ng-repeat="date in dates">
+					<tr ng-repeat="date in dates | orderBy: sortCriteria">
 						<td><!-- <img src="{{date.photo}}"> --></td>
 						<td>
 							<h3>{{date.resturaunt}}</h3>
@@ -43,10 +43,10 @@
 			<div id="options">
 				<h2>Options</h2>
 				<h3>Sort By:</h3>
-				<input type="radio" ng-model="sortCriteria" value="null">Relevance<br>
-				<input type="radio" ng-model="sortCriteria" value="distance">Distance<br>
+				<input type="radio" ng-model="sortCriteria" value="resturaunt">Relevance<br>
+				<input type="radio" ng-model="sortCriteria" value="resturaunt">Distance<br>
 				<input type="radio" ng-model="sortCriteria" value="time">Time<br>
-				<div id="map-container" ng-show="true"></div>
+				<leaflet width="300px" height="300px"></leaflet>
 			</div>
 		</div>
 	</div>

@@ -20,18 +20,20 @@
 		<div class="col-sm-8" id="datesBox">
 			<div>
 				<table class="table">
-					<tr>
-						<td><img src="{{date.profilePic}}"></td>
+					<tr ng-repeat="date in dates | orderBy: searchCriteria">
+						<td><!-- <img src="{{date.photo}}"> --></td>
 						<td>
-							<h3>{{date.location}} : {{date.title}}</h3>
-							<p>{{date.details}}</p>
+							<h3>{{date.resturaunt}}</h3>
+							<p>{{date.desc}}</p>
 						</td>
 						<td>
-							<h3>Happening In:</h3>
-							<p>Some time</p>
+							<h3>Happening At:</h3>
+							<p>{{date.time}}</p>
+							<br>
+							<p>{{date.date}}
 							<br>
 							<h3>Location:</h3>
-							<p>{{date.location}}</p>
+							<p>{{date.resturaunt}}</p>
 						</td>
 					</tr>
 				</table>

@@ -1,0 +1,31 @@
+﻿<div class="modal-header">
+    <div>
+        <h3 class="modal-title" id="top-modal-title">Select a Restaurant</h3>
+        <div>
+            <button class="btn btn-warning top-modal-btn" type="button" ng-click="cancel()">Cancel</button>
+            <button class="btn btn-primary top-modal-btn" type="button" ng-click="ok()">Select Restaurant</button>      
+        </div>
+        
+    </div>
+    
+</div>
+
+<div class="modal-body">
+    <table class="table">
+        <tr ng-repeat="data in yelpResponses | orderBy: '-rating' | limitTo: 20" ng-class="{'selected-row':selectedRestaurant === data}" ng-click="select(data)">
+            <td><img ng-src="{{data.image_url !== null ? data.image_url : 'img/default.png'}}"></td>
+            <td>
+                <div>
+                    <div>
+                        <i>{{data.name}}</i>
+                    </div>
+                    <img ng-src="{{data.rating_img_url}}" /></div>
+                <div>{{data.snippet_text}}</div>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ok()">Select Restaurant</button>
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+</div>

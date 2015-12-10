@@ -155,7 +155,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     // need to include ui bootstrap js in js files for modal to work
 
     $scope.getYelpData = function () {
-        console.log("ng-click works");
         if ($scope.yelpSearch == undefined) {
             $scope.yelpSearch = '';
         }
@@ -168,6 +167,44 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
             }
         };
         console.log($scope.yelpSearch);
+
+        Parse.Cloud.run('yelpApi', request, {
+            success: function (response) {
+                console.log(JSON.parse(response.body))
+
+                $scope.yelpResponses = JSON.parse(response.body).businesses;
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'partials/yelpmodal.html',
+                    controller: 'YelpModalCtrl',
+                    scope: $scope
+                });
+
+                modalInstance.result.then(function (selectedRestaurant) {
+                    $scope.restaurant = selectedRestaurant;
+                    console.log($scope.restaurant);
+
+                })
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+}])
+
+.controller("YelpModalCtrl", ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+    $scope.selectedRestaurant = {};
+
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.selectedRestaurant);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    }
+
+    $scope.select = function (restaurant) {
+        $scope.selectedRestaurant = restaurant;
     }
 
     $scope.createDate = function(resturaunt, date, time, desc) {

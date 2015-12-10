@@ -1,3 +1,4 @@
+
 <h2>Search for Dates:</h2>
 <input name="foodSearch" placeholder="Find: tacos" class="form-control search" id="search">
 <input name="locationSearch" placeholder="Near: Seattle, WA" class="form-control search">
@@ -12,3 +13,36 @@
 		C21.517,9.026,21.517,14.63,18.073,18.074z"/>
 </g>
 </svg>
+
+<button type="button" class="btn btn-default" id="newDate">Create a Date</button>
+<div class="row">
+	<h1>Dates near you: 2:34 pm in Seattle</h1> 
+	<div class="col-sm-8" id="datesBox">
+		<div>
+			<table class="table">
+				<tr>
+					<td><img src="{{date.profilePic}}"></td>
+					<td>
+						<h3>{{date.location}} : {{date.title}}</h3>
+						<p>{{date.details}}</p>
+					</td>
+					<td>
+						<h3>Happening In:</h3>
+						<p>Some time</p>
+						<br>
+						<h3>Location:</h3>
+						<p>{{date.location}}</p>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<div class="col-sm-4">
+		<h2>Options</h2>
+		<h3>Sort By:</h3>
+		<input type="radio" ng-model="sortCriteria" value="null">Relevance<br>
+		<input type="radio" ng-model="sortCriteria" value="distance">Distance<br>
+		<input type="radio" ng-model="sortCriteria" value="time">Time<br>
+		<div id="map-container" ng-show="true"></div>
+
+</div>

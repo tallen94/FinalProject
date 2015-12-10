@@ -86,7 +86,20 @@ input.ng-invalid.ng-touched {
 }
 
 .search {
-	width: 20%;
-	position: inline;
+	width: 20em;
+	display: inline;
 	padding-right: 3px;
 }
+
+#newDate {
+	margin-left: 20px;
+}
+
+#datesBox {
+	background-color: #E9EAEE;
+}
+
+#map-container {
+	height: 200px;
+}
+

@@ -7,10 +7,13 @@
 
 		<title>Lunch Date</title>
 
+		<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.css" />
+
 		<link rel="stylesheet" type="text/css" href="css/main.css">
 
 		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular.min.js"></script>
   		<script src="https://www.parsecdn.com/js/parse-1.6.0.min.js"></script>
+
 
 		
 	</head>
@@ -25,15 +28,15 @@
 				<li ng-repeat="tab in tabs"><a ui-sref="{{tab}}">{{tab}}</a></li>
 			</ul>
 		</nav>
-
 		<div class="container">
 			<main>
 				<div ui-view></div>
 			</main>
 		</div>
-
+		<div id="map-container" ng-hide="true"></div>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.15/angular-ui-router.min.js"></script>
 		<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.4.7/angular-sanitize.js"></script>
+		<script src="http://cdn.leafletjs.com/leaflet-0.7.5/leaflet.js"></script>
         <script src="js/ui-bootstrap-tpls-0.14.3.min.js"></script>
 		<script type="text/javascript" src="js/main.js"></script>
 	</body>

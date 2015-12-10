@@ -113,14 +113,21 @@ svg {
 }
 
 #logout {
-	float: right;
-	margin-top: 5px;
+	color: red;
+	margin-top: 10em;
+	width: 250px;
+	border: solid red;
+	font-weight: bold;
 }
 
 #profileDisp {
 	height: 200px;
 	width: 300px;
 	border-radius: 10%;
+}
+
+#profileData {
+	text-align: center;
 }
 
 @media (max-width: 768px) {

@@ -20,7 +20,7 @@
 		<div class="col-sm-8" id="datesBox">
 			<div ng-if="dates">
 				<table class="table">
-					<tr ng-repeat="date in dates | orderBy: sortCriteria | filterBy: food">
+					<tr ng-repeat="date in dates | orderBy: sortCriteria">
 						<td><!-- <img src="{{date.photo}}"> --></td>
 						<td>
 							<h3>{{date.resturaunt}}</h3>

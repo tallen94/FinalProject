@@ -2,7 +2,7 @@
 
 var LunchDate = Parse.Object.extend("LunchDate");
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
+angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.boostrap']).run(function() {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
 })
 .config(function($stateProvider, $urlRouterProvider) {
@@ -85,8 +85,40 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 	}	
 }])
 
-.controller("CreateLunchDateCtrl", ['$scope', '$http', function ($scope, $http) {
+.controller("CreateLunchDateCtrl", ['$scope', '$http','$uibModal', function ($scope, $http, $uibModal) {
+    // need to include ui bootstrap js in js files for modal to work
 
+    $scope.getYelpData = function () {
+        var request = {
+            method: 'GET',
+            url: 'search',
+            params: {
+                term: $scope.yelpSearch,
+                location: 'Seattle'
+            }
+        };
+
+        Parse.Cloud.run('yelpApi', request, {
+            success: function (response) {
+                console.log(response.body);
+                $scope.yelpResponses = response.body;
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'partials/yelp-modal.html',
+                    controller: 'YelpModalCtrl',
+                    scope: $scope
+                });
+
+                modalInstance.result.then(function (selectedRestaurant) {
+                    $scope.restaurant = selectedRestaurant;
+                    console.log($scope.restaurant);
+
+                })
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
 }])
 
 .directive('sameAs', function() {

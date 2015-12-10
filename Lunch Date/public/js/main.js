@@ -166,7 +166,19 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet
 
 .controller("CreateLunchDateCtrl", ['$scope', '$http','$uibModal', '$state', function($scope, $http, $uibModal, $state) {
     // need to include ui bootstrap js in js files for modal to work
+    $scope.time = new Date();
 
+    $scope.hstep = 1;
+    $scope.mstep = 1;
+    $scope.ismeridian = true;
+
+    $scope.date = new Date();
+    $scope.open = function ($event) {
+        $scope.status.opened = true;
+    };
+    $scope.status = {
+        opened: false
+    };
     $scope.currDate = {
     	search: '',
         restaurant: '',
@@ -214,17 +226,19 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet
 
     $scope.createDate = function (restaurant, date, time, desc) {
         console.log("date: " + restaurant + ", " + date + ", " + time + ", " + desc);
-        // Need to also store information on current user?  I think we need to drop and recreate table
-        // if we want to add currentuser column
+        console.log(date.toDateString());
+        console.log(time.toTimeString());
+
         var lunchDate = new LunchDate();
-        // lunchDate.set('user', Parse.User.current());
+        lunchDate.set('user', Parse.User.current());
         lunchDate.set('resturaunt', restaurant);
-        lunchDate.set('date', date);
-        lunchDate.set('time', time);
+        lunchDate.set('date', date.toDateString());
+        lunchDate.set('time', time.toTimeString());
         lunchDate.set('desc', desc);
         lunchDate.save(null, {
             success: function (res) {
                 console.log(res);
+                alert("Your date has been saved")
             },
             error: function (res, error) {
                 console.log(error);

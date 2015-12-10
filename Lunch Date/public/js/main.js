@@ -50,7 +50,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 .controller("MainCtrl", ['$scope', '$http', '$state', function($scope, $http, $state) {
 	$scope.tabs;
 	$scope.currentUser = Parse.User.current();
-	$scope.currentLocation = navigator.geolocation;
 
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) { 
 		console.log("START " + toState.name);
@@ -117,14 +116,15 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 }])
 
 .controller("HomeCtrl", ['$scope', '$rootScope', '$interval', function($scope, $rootScope, $interval) {
-	console.log($rootScope.currentLocation);
+	console.log(navigator.geolocation.getCurrentPosition());
 	var tick = function() {
 		$scope.timeNow = Date.now();
+		var query = new Parse.Query(LunchDate);
 	}
 
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 		tick();
-		$interval(tick, 1000);
+		$interval(tick, 1000 * 60);
 	})
 
 }])

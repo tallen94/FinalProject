@@ -18,7 +18,7 @@
 					<input class="form-control" name="password" type="password" placeholder="Password" required ng-model="newUser.password">
 				</div>
 				<div class="form-group">
-					<button class="btn btn-primary" id='submit' type="submit">Login</button>
+					<button class="btn btn-primary" id='submit' type="submit" ng-click="login(newUser.email, newUser.password)">Login</button>
 				</div>
 				<a ui-sref="signup" id="noAccount">Don't have an account?</a>
 				<p id="learn" ng-click = "showInfo = !showInfo"><a href="#"><b>Learn More<b></a></p>

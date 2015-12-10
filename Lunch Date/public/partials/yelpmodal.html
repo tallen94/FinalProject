@@ -4,16 +4,13 @@
 
 <div class="modal-body">
     <table class="table">
-        <tr ng-repeat="track in tracks" ng-class="{'selected-row':selectedTrack === track}" ng-click="select(track)">
-            <td><img class="art-icon" ng-src="{{track.artwork_url !== null ? track.artwork_url : 'img/note.png'}}"></td>
-            <td><i>{{track.title}}</i> by {{track.user.username}}</td>
+        <tr ng-repeat="data in yelpResponses | orderBy: '-rating' | limitTo: 20" ng-class="{'selected-row':selectedTrack === track}" ng-click="select(track)">
+            <td><img class="art-icon" ng-src="{{data.image_url !== null ? data.image_url : 'img/note.png'}}"></td>
+            <td><i>{{data.name}}</i> by {{data.snippet_text}}</td>
         </tr>
     </table>
-    <div class='alert alert-danger alert-dismissible' ng-if="noBpm" role='alert'>
-        <strong>Song does not contain BPM information!</strong>
-    </div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="ok()">Select Song</button>
+    <button class="btn btn-primary" type="button" ng-click="ok()">Select Restaurant</button>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
 </div>

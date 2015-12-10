@@ -130,7 +130,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
     // need to include ui bootstrap js in js files for modal to work
 
     $scope.getYelpData = function () {
-        console.log("ng-click works");
         if ($scope.yelpSearch == undefined) {
             $scope.yelpSearch = '';
         }
@@ -142,11 +141,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
                 location: 'Seattle'
             }
         };
-        console.log($scope.yelpSearch);
 
         Parse.Cloud.run('yelpApi', request, {
             success: function (response) {
-                console.log(response.body);
+                console.log(response.body.business);
                 $scope.yelpResponses = response.body;
                 var modalInstance = $uibModal.open({
                     templateUrl: 'partials/yelpmodal.html',
@@ -167,7 +165,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
     }
 }])
 
-.controller("YelpModalCtrl", ['$scope', '$uibModal', function ($scope, $uibModal) {
+.controller("YelpModalCtrl", ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
     $scope.selectedRestaurant = {};
 
     $scope.ok = function () {

@@ -69,6 +69,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 				if(Parse.User.current() == null) {
 					event.preventDefault();
 					$state.go('login');
+				} else {
+					$scope.currentUser = Parse.User.current();
 				}
 				break;
 		}

@@ -27,12 +27,12 @@
     #searchButton {
         background: white;
         border-style: none;
-        padding-top: 2em;
+        margin-top: 2em;
         float: left;
     }
 
 </style>
-<div ng-controller="createLunchDateCtrl">
+<div ng-controller="CreateLunchDateCtrl">
     <h1>Create Lunch Date</h1>
     <div class="container">
         <div class="row">
@@ -63,7 +63,7 @@
                 </form>
             </div>
             <div class="col-xs-3 col-sm-4">
-                <button id="searchButton" ng-click="getYelpData"><span id="searchIcon" class="glyphicon glyphicon-search"></span></button>
+                <button id="searchButton" ng-click="getYelpData()"><span id="searchIcon" class="glyphicon glyphicon-search"></span></button>
             </div>
         </div>
     </div>

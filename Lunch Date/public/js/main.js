@@ -13,7 +13,7 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?acce
 
 angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(function() {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
-	Console.log("RUN");
+	console.log("RUN");
 })
 .config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider

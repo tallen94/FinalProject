@@ -36,6 +36,11 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 			url: '/create-date',
 			templateUrl: 'partials/createlunchdate.html',
 			controller: 'CreateLunchDateCtrl'
+		})
+		.state('profile', {
+			url: '/profile',
+			templateUrl: 'partials/profile.html',
+			controller: 'ProfileCtrl'
 		});
 
 		$urlRouterProvider.otherwise('/login');
@@ -165,6 +170,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
         //    }
         //});
     }
+}])
+
+.controller("ProfileCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+	
 }])
 
 .directive('sameAs', function() {

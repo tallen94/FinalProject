@@ -49,7 +49,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 
 .controller("MainCtrl", ['$scope', '$http', '$state', function($scope, $http, $state) {
 	$scope.tabs;
-	$scope.currentUser = Parse.User.current();
 
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) { 
 		console.log("START " + toState.name);
@@ -57,15 +56,17 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 		switch(toState.name) {
 			case 'signup':
 			case 'login':
-				if($scope.currentUser) {
+				if(Parse.User.current()) {
 					event.preventDefault();
+					$scope.currentUser = Parse.User.current();
 					$state.go('home');
 				}
 				break;
 			case 'home':
 			case 'profile':
 			case 'create-date':
-				if($scope.currentUser == null) {
+				console.log(Parse.User.current())
+				if(Parse.User.current() == null) {
 					event.preventDefault();
 					$state.go('login');
 				}
@@ -110,7 +111,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 }])
 
 .controller("HomeCtrl", ['$scope', '$rootScope', '$interval', function($scope, $rootScope, $interval) {
-	console.log(navigator.geolocation.getCurrentPosition());
 	var tick = function() {
 		$scope.timeNow = Date.now();
 		var query = new Parse.Query(LunchDate);
@@ -205,12 +205,28 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
         //    }
         //});
     }
+
+    $scope.createDate = function(resturaunt, date, time, desc) {
+    	var lunchDate = new LunchDate();
+    	lunchDate.set('resturaunt', resturaunt);
+    	lunchDate.set('date', date);
+    	lunchDate.set('time', desc);
+    	lunchDate.set('desc', desc);
+    	lunchDate.save(null, {
+    		success: function(res) {
+    			console.log(res);
+    		},
+    		error: function(res, error) {
+    			console.log(error);
+    		}
+    	});
+
+    }
 }])
-.controller("ProfileCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+.controller("ProfileCtrl", ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
 	$scope.logout = function() {
 		console.log("logout has been called");
-		console.log($rootScope.currentUser);
-		if($rootScope.currentUser) {
+		if(Parse.User.current()) {
 			console.log("user authenticatd");
 			Parse.User.logOut();
 			$rootScope.currentUser = null;

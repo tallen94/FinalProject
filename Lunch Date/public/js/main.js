@@ -144,7 +144,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 
         Parse.Cloud.run('yelpApi', request, {
             success: function (response) {
-                console.log(response.body.business);
+                console.log(response.body);
                 $scope.yelpResponses = response.body;
                 var modalInstance = $uibModal.open({
                     templateUrl: 'partials/yelpmodal.html',

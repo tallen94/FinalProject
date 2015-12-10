@@ -125,6 +125,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
     // need to include ui bootstrap js in js files for modal to work
 
     $scope.getYelpData = function () {
+        console.log("ng-click works");
+        if ($scope.yelpSearch == undefined) {
+            $scope.yelpSearch = '';
+        }
         var request = {
             method: 'GET',
             url: 'search',
@@ -133,27 +137,28 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
                 location: 'Seattle'
             }
         };
+        console.log($scope.yelpSearch);
 
-        Parse.Cloud.run('yelpApi', request, {
-            success: function (response) {
-                console.log(response.body);
-                $scope.yelpResponses = response.body;
-                var modalInstance = $uibModal.open({
-                    templateUrl: 'partials/yelp-modal.html',
-                    controller: 'YelpModalCtrl',
-                    scope: $scope
-                });
+        //Parse.Cloud.run('yelpApi', request, {
+        //    success: function (response) {
+        //        console.log(response.body);
+        //        $scope.yelpResponses = response.body;
+        //        var modalInstance = $uibModal.open({
+        //            templateUrl: 'partials/yelp-modal.html',
+        //            controller: 'YelpModalCtrl',
+        //            scope: $scope
+        //        });
 
-                modalInstance.result.then(function (selectedRestaurant) {
-                    $scope.restaurant = selectedRestaurant;
-                    console.log($scope.restaurant);
+        //        modalInstance.result.then(function (selectedRestaurant) {
+        //            $scope.restaurant = selectedRestaurant;
+        //            console.log($scope.restaurant);
 
-                })
-            },
-            error: function (error) {
-                console.log(error);
-            }
-        });
+        //        })
+        //    },
+        //    error: function (error) {
+        //        console.log(error);
+        //    }
+        //});
     }
 }])
 

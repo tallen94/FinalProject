@@ -34,7 +34,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 		})
 		.state('create-date', {
 			url: '/create-date',
-			templateUrl: 'createlunchdate.html',
+			templateUrl: 'partials/createlunchdate.html',
 			controller: 'CreateLunchDateCtrl'
 		});
 

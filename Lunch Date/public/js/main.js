@@ -88,6 +88,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 		tick();
 		$interval(tick, 1000 * 60);
 	})
+
+	
 }])
 
 .controller("LoginCtrl", ['$scope', '$state', function($scope, $state) {

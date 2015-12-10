@@ -3,15 +3,6 @@
 var LunchDate = Parse.Object.extend("LunchDate");
 var currentUser;
 
-var map = L.map('map-container').setView([39.8282, -98.5795], 4);
-
-L.tileLayer('https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoiamFrZXJzbm9ydGgiLCJhIjoiY2lmeDFkbWdzM200b3Vpa3J1c3ZpeGlvZiJ9.IoutzB1Q6QO_BFwIMelV2w', {
-    attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="http://mapbox.com">Mapbox</a>',
-    maxZoom: 18,
-    id: 'mapbox.streets',
-    accessToken: 'pk.eyJ1IjoiamFrZXJzbm9ydGgiLCJhIjoiY2lmeDFkbWdzM200b3Vpa3J1c3ZpeGlvZiJ9.IoutzB1Q6QO_BFwIMelV2w'
-}).addTo(map);
-
 angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 .run(function() {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
@@ -81,30 +72,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 			case 'home':
 			case 'profile':
 			case 'create-date':
-				console.log('error');
 				$scope.tabs = ['home', 'profile'];
 				break;
 		}
 	})
-
-	// var request = {
-	// 	method: 'GET',
-	// 	url: 'search',
-	// 	params: {
-	// 		term: 'lunch',
-	// 		location: 'Seattle'
-	// 	}
-	// };
-
-	// Parse.Cloud.run('yelpApi', request, {
-	// 	success: function(response) {
-	// 		console.log("SUCCESS: " + response.body);
-	// 	}, 
-	// 	error: function(error) {
-	// 		console.log("ERROR: " + error);
-	// 	}
-	// });
-	
 }])
 
 .controller("HomeCtrl", ['$scope', '$interval', function($scope, $interval) {
@@ -129,6 +100,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 				$state.go('home');
 			},
 			error: function(user, error) {
+				$scope.invalidCred = true;
 				console.log("LOGIN ERROR + " + error);
 			}
 		}) 
@@ -152,7 +124,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 
 		user.signUp(null, {
 			success: function(user) {
-				console.log(user);
 				currentUser = user;
 			},
 			error: function(user, error) {
@@ -179,27 +150,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
             }
         };
         console.log($scope.yelpSearch);
-
-        //Parse.Cloud.run('yelpApi', request, {
-        //    success: function (response) {
-        //        console.log(response.body);
-        //        $scope.yelpResponses = response.body;
-        //        var modalInstance = $uibModal.open({
-        //            templateUrl: 'partials/yelp-modal.html',
-        //            controller: 'YelpModalCtrl',
-        //            scope: $scope
-        //        });
-
-        //        modalInstance.result.then(function (selectedRestaurant) {
-        //            $scope.restaurant = selectedRestaurant;
-        //            console.log($scope.restaurant);
-
-        //        })
-        //    },
-        //    error: function (error) {
-        //        console.log(error);
-        //    }
-        //});
     }
 
     $scope.createDate = function(resturaunt, date, time, desc) {
@@ -220,10 +170,12 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     }
 }])
 .controller("ProfileCtrl", ['$scope', '$state', function($scope, $state) {
+	$scope.currentUser = {};
 
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-		$scope.currentUser = currentUser;
-		console.log($scope.currentUser);
+		$scope.currentUser.fName = currentUser.get('fName');
+		$scope.currentUser.lName = currentUser.get('lName');
+		$scope.currentUser.photo = currentUser.get('photo');
 	})
 
 	$scope.logout = function() {

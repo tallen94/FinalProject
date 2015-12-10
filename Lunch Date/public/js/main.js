@@ -2,7 +2,7 @@
 
 var LunchDate = Parse.Object.extend("LunchDate");
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.boostrap']).run(function() {
+angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(function() {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
 })
 .config(function($stateProvider, $urlRouterProvider) {

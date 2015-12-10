@@ -78,16 +78,33 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	})
 }])
 
-.controller("HomeCtrl", ['$scope', '$interval', function($scope, $interval) {
+.controller("HomeCtrl", ['$scope', '$interval', '$q', function($scope, $interval, $q) {
+
+	$scope.dates = [];
+	var DatesDfd = $q.defer();
+
 	var tick = function() {
 		$scope.timeNow = Date.now();
 		var query = new Parse.Query(LunchDate);
-	}
+		query.find().then(function(results) {
+			DatesDfd.resolve(results);
+		})
+	};
 
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-		tick();
-		$interval(tick, 1000 * 60);
-	})
+	DatesDfd.promise.then(function(dates) {
+		dates.forEach(function(date) {
+			var item = {
+				resturaunt: date.get('resturaunt'),
+				date: date.get('date'),
+				time: date.get('time'),
+				desc: date.get('desc')
+			}
+			$scope.dates.push(item);
+		})	
+	});
+
+	tick();
+	$interval(tick, 1000 * 60);
 }])
 
 .controller("LoginCtrl", ['$scope', '$state', function($scope, $state) {
@@ -134,22 +151,22 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	}	
 }])
 
-.controller("CreateLunchDateCtrl", ['$scope', '$http','$uibModal', function ($scope, $http, $uibModal) {
+.controller("CreateLunchDateCtrl", ['$scope', '$http','$uibModal', '$state', function($scope, $http, $uibModal, $state) {
     // need to include ui bootstrap js in js files for modal to work
 
     $scope.getYelpData = function () {
-        if ($scope.currDate.date == undefined) {
-            $scope.currDate.date = '';
+        if ($scope.currDate.resturaunt == undefined) {
+            $scope.currDate.resturaunt = '';
         }
         var request = {
             method: 'GET',
             url: 'search',
             params: {
-                term: $scope.currDate.date,
+                term: $scope.currDate.resturaunt,
                 location: 'Seattle'
             }
         };
-        console.log($scope.currDate.date);
+        console.log($scope.currDate.resturaunt);
 
         Parse.Cloud.run('yelpApi', request, {
             success: function (response) {
@@ -208,7 +225,26 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
         console.log(restaurant);
         console.log("selected: " + restaurant.name);
         $scope.selectedRestaurant = restaurant;
-        $scope.currDate.date = restaurant.name;
+
+        $scope.currDate.resturaunt = restaurant.name;
+    }
+
+    $scope.createDate = function(resturaunt, date, time, desc) {
+    	var lunchDate = new LunchDate();
+    	lunchDate.set('resturaunt', resturaunt);
+    	lunchDate.set('date', date);
+    	lunchDate.set('time', time);
+    	lunchDate.set('desc', desc);
+    	lunchDate.save(null, {
+    		success: function(res) {
+    			console.log(res);
+    			$state.go('home');
+    		},
+    		error: function(res, error) {
+    			console.log(error);
+    		}
+    	});
+
     }
 }])
 

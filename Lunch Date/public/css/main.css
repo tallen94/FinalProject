@@ -116,3 +116,9 @@ svg {
 	float: right;
 }
 
+@media (max-width: 768px) {
+	.title {
+		color: transparent;
+	}
+}
+

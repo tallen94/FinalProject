@@ -123,6 +123,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 		$interval(tick, 1000 * 60);
 	})
 
+	$scope.dates = [{resturaunt: "something", date: "sometime", time: "some other time", desc: "something else"}, {resturaunt: "something", date: "sometime", time: "some other time", desc: "something else"}];
+
 }])
 
 .controller("LoginCtrl", ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
@@ -136,6 +138,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 			},
 			error: function(user, error) {
 				console.log("LOGIN ERROR + " + error);
+				$scope.invalidCred = true;
 			}
 		}) 
 	}
@@ -227,7 +230,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 }])
 .controller("ProfileCtrl", ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
 	$scope.currentUser = $rootScope.currentUser;
-	console.log($scope.currentUser);
+	console.log($rootScope.currentUser);
 	$scope.logout = function() {
 		console.log("logout has been called");
 		if(Parse.User.current()) {

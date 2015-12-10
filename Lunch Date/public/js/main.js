@@ -154,19 +154,26 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 .controller("CreateLunchDateCtrl", ['$scope', '$http','$uibModal', '$state', function($scope, $http, $uibModal, $state) {
     // need to include ui bootstrap js in js files for modal to work
 
+    $scope.currDate = {
+        restaurant: '',
+        date: '',
+        time: '',
+        desc: ''
+    }
+
     $scope.getYelpData = function () {
-        if ($scope.currDate.resturaunt == undefined) {
-            $scope.currDate.resturaunt = '';
+        if ($scope.currDate.restaurant == undefined) {
+            $scope.currDate.restaurant = '';
         }
         var request = {
             method: 'GET',
             url: 'search',
             params: {
-                term: $scope.currDate.resturaunt,
+                term: $scope.currDate.restaurant,
                 location: 'Seattle'
             }
         };
-        console.log($scope.currDate.resturaunt);
+        console.log($scope.currDate.restaurant);
 
         Parse.Cloud.run('yelpApi', request, {
             success: function (response) {
@@ -191,9 +198,13 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
         });
     }
 
-    $scope.createDate = function (resturaunt, date, time, desc) {
+    $scope.createDate = function (restaurant, date, time, desc) {
+        console.log("date: " + restaurant + ", " + date + ", " + time + ", " + desc);
+        // Need to also store information on current user?  I think we need to drop and recreate table
+        // if we want to add currentuser column
         var lunchDate = new LunchDate();
-        lunchDate.set('resturaunt', resturaunt);
+        // lunchDate.set('user', Parse.User.current());
+        lunchDate.set('resturaunt', restaurant);
         lunchDate.set('date', date);
         lunchDate.set('time', time);
         lunchDate.set('desc', desc);
@@ -226,26 +237,26 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
         console.log("selected: " + restaurant.name);
         $scope.selectedRestaurant = restaurant;
 
-        $scope.currDate.resturaunt = restaurant.name;
+        $scope.currDate.restaurant = restaurant.name;
     }
 
-    $scope.createDate = function(resturaunt, date, time, desc) {
-    	var lunchDate = new LunchDate();
-    	lunchDate.set('resturaunt', resturaunt);
-    	lunchDate.set('date', date);
-    	lunchDate.set('time', time);
-    	lunchDate.set('desc', desc);
-    	lunchDate.save(null, {
-    		success: function(res) {
-    			console.log(res);
-    			$state.go('home');
-    		},
-    		error: function(res, error) {
-    			console.log(error);
-    		}
-    	});
+    //$scope.createDate = function(resturaunt, date, time, desc) {
+    //	var lunchDate = new LunchDate();
+    //	lunchDate.set('resturaunt', resturaunt);
+    //	lunchDate.set('date', date);
+    //	lunchDate.set('time', time);
+    //	lunchDate.set('desc', desc);
+    //	lunchDate.save(null, {
+    //		success: function(res) {
+    //			console.log(res);
+    //			$state.go('home');
+    //		},
+    //		error: function(res, error) {
+    //			console.log(error);
+    //		}
+    //	});
 
-    }
+    //}
 }])
 
 .controller("ProfileCtrl", ['$scope', '$state', function($scope, $state) {

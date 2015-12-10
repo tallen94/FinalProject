@@ -88,7 +88,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 
 .controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
-		$rootScope.tabs = ['home', 'profile', 'logout'];
+		$rootScope.tabs = ['home', 'profile'];
 	})
 }])
 
@@ -184,7 +184,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
     }
 }])
 .controller("ProfileCtrl", ['$scope', function($scope) {
-	
+
 }])
 
 .directive('sameAs', function() {

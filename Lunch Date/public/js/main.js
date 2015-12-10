@@ -138,18 +138,18 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     // need to include ui bootstrap js in js files for modal to work
 
     $scope.getYelpData = function () {
-        if ($scope.yelpSearch == undefined) {
-            $scope.yelpSearch = '';
+        if ($scope.currDate.date == undefined) {
+            $scope.currDate.date = '';
         }
         var request = {
             method: 'GET',
             url: 'search',
             params: {
-                term: $scope.yelpSearch,
+                term: $scope.currDate.date,
                 location: 'Seattle'
             }
         };
-        console.log($scope.yelpSearch);
+        console.log($scope.currDate.date);
 
         Parse.Cloud.run('yelpApi', request, {
             success: function (response) {
@@ -173,6 +173,23 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
             }
         });
     }
+
+    $scope.createDate = function (resturaunt, date, time, desc) {
+        var lunchDate = new LunchDate();
+        lunchDate.set('resturaunt', resturaunt);
+        lunchDate.set('date', date);
+        lunchDate.set('time', time);
+        lunchDate.set('desc', desc);
+        lunchDate.save(null, {
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (res, error) {
+                console.log(error);
+            }
+        });
+
+    }
 }])
 
 .controller("YelpModalCtrl", ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
@@ -180,6 +197,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 
     $scope.ok = function () {
         $uibModalInstance.close($scope.selectedRestaurant);
+        
     };
 
     $scope.cancel = function () {
@@ -187,24 +205,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     }
 
     $scope.select = function (restaurant) {
+        console.log(restaurant);
+        console.log("selected: " + restaurant.name);
         $scope.selectedRestaurant = restaurant;
-    }
-
-    $scope.createDate = function(resturaunt, date, time, desc) {
-    	var lunchDate = new LunchDate();
-    	lunchDate.set('resturaunt', resturaunt);
-    	lunchDate.set('date', date);
-    	lunchDate.set('time', time);
-    	lunchDate.set('desc', desc);
-    	lunchDate.save(null, {
-    		success: function(res) {
-    			console.log(res);
-    		},
-    		error: function(res, error) {
-    			console.log(error);
-    		}
-    	});
-
+        $scope.currDate.date = restaurant.name;
     }
 }])
 

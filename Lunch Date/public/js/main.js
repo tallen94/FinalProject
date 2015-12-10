@@ -224,6 +224,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     }
 }])
 .controller("ProfileCtrl", ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
+	$scope.currentUser = $rootScope.currentUser;
+	console.log($scope.currentUser);
 	$scope.logout = function() {
 		console.log("logout has been called");
 		if(Parse.User.current()) {

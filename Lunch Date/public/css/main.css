@@ -112,3 +112,7 @@ svg {
 	height: 200px;
 }
 
+#logout {
+	float: right;
+}
+

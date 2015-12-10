@@ -11,9 +11,9 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?acce
     accessToken: 'pk.eyJ1IjoiamFrZXJzbm9ydGgiLCJhIjoiY2lmeDFkbWdzM200b3Vpa3J1c3ZpeGlvZiJ9.IoutzB1Q6QO_BFwIMelV2w'
 }).addTo(map);
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(function() {
+angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
+.run(['$state', function($state) {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
-	console.log("RUN");
 })
 .config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider
@@ -51,6 +51,36 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 	$scope.tabs;
 	$scope.currentUser = Parse.User.current();
 
+	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) { 
+		switch(toState.name) {
+			case 'signup':
+			case 'login':
+				if($scope.currentUser) {
+					$state.go('home');
+				}
+				break;
+			case 'home':
+			case 'profile':
+				if($scope.currentUser == null) {
+					$state.go('login');
+				}
+				break;
+		}
+	})
+
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+		switch(toState.name) {
+			case 'signup':
+			case 'login':
+				$scope.tabs = ['login', 'signup'];
+				break;
+			case 'home':
+			case 'profile':
+				$scope.tabs = ['home', 'profile'];
+				break;
+		}
+	})
+
 	// var request = {
 	// 	method: 'GET',
 	// 	url: 'search',
@@ -79,40 +109,11 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 
 .controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
 
-	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-
-		if($rootScope.currentUser == null) {
-			$state.go('login');
-		}
-
-	});
-
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
-
-		$rootScope.tabs = ['home', 'profile'];
-
-	});
-
 
 }])
 
 .controller("LoginCtrl", ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
 	$scope.showInfo = false;
-
-	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-
-		if(Parse.User.current()) {
-			$rootScope.currentUser = Parse.User.current();
-			$state.go('home');
-		}
-
-	});
-
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
-
-		$rootScope.tabs = ['login', 'signup'];
-
-	})
 
 	$scope.login = function(email, passwd) {
 		Parse.User.logIn(email, passwd, {
@@ -130,10 +131,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 
 .controller("SignupCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
 	$scope.newUser = {};
-
-	// $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
-	// 	$rootScope.tabs = ['login', 'signup'];
-	// })
 
 	$scope.signup = function(photo, fName, lName, passwd, email) {
 		if(photo == null) {
@@ -198,24 +195,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
         //});
     }
 }])
-.controller("ProfileCtrl", ['$scope', function($scope) {
-
-	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams){
-
-		if($rootScope.currentUser == null) {
-			$state.go('login');
-		}
-
-	});
-
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
-
-		$rootScope.tabs = ['home', 'profile'];
-
-	});
-
-}])
-
 .controller("ProfileCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
 	
 }])

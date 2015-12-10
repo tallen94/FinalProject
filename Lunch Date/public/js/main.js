@@ -78,10 +78,21 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet
 	})
 }])
 
-.controller("HomeCtrl", ['$scope', '$interval', '$q', function($scope, $interval, $q) {
+.controller("HomeCtrl", ['$scope', '$interval', '$q', '$rootScope', function($scope, $interval, $q, $rootScope) {
 
 	$scope.dates = [];
 	var DatesDfd = $q.defer();
+	navigator.geolocation.getCurrentPosition(function(pos) {
+		var lat = pos.coords.latitude;
+		var lng = pos.coords.longitude;
+		angular.extend($rootScope, {
+			center: {
+				lat: lat,
+				lng: lng,
+				zoom: 4
+			}
+		})
+	})
 
 	var tick = function() {
 		$scope.timeNow = Date.now();
@@ -105,6 +116,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet
 
 	tick();
 	$interval(tick, 1000 * 60);
+
+	
 }])
 
 .controller("LoginCtrl", ['$scope', '$state', function($scope, $state) {

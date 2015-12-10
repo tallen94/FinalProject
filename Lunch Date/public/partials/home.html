@@ -20,7 +20,7 @@
 		<div class="col-sm-8" id="datesBox">
 			<div ng-if="dates">
 				<table class="table">
-					<tr ng-repeat="date in dates | orderBy: sortCriteria">
+					<tr ng-repeat="date in dates | orderBy: sortCriteria | filter: food">
 						<td><!-- <img src="{{date.photo}}"> --></td>
 						<td>
 							<h3>{{date.resturaunt}}</h3>
@@ -43,10 +43,10 @@
 			<div id="options">
 				<h2>Options</h2>
 				<h3>Sort By:</h3>
-				<input type="radio" ng-model="sortCriteria" value="resturaunt">Relevance<br>
-				<input type="radio" ng-model="sortCriteria" value="resturaunt">Distance<br>
+				<input type="radio" ng-model="sortCriteria" value="resturaunt">Restaurant<br>
+				<input type="radio" ng-model="sortCriteria" value="date">Date<br>
 				<input type="radio" ng-model="sortCriteria" value="time">Time<br>
-				<leaflet width="300px" height="300px"></leaflet>
+				<leaflet center="center" width="300px" height="300px"></leaflet>
 			</div>
 		</div>
 	</div>

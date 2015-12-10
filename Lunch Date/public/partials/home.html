@@ -1,4 +1,4 @@
-<div ng-controller="HomeCtrl">
+<div>
 	<h2>Search for Dates:</h2>
 	<input name="foodSearch" placeholder="Find: tacos" class="form-control search" id="search" ng-model="food">
 	<input name="locationSearch" placeholder="Near: Seattle, WA" class="form-control search">
@@ -18,7 +18,7 @@
 	<div class="row">
 		<h1>Dates near you: {{timeNow | date: 'hh:mm'}} in Seattle</h1> 
 		<div class="col-sm-8" id="datesBox">
-			<div>
+			<div ng-if="dates">
 				<table class="table">
 					<tr ng-repeat="date in dates | orderBy: sortCriteria | filterBy: food">
 						<td><!-- <img src="{{date.photo}}"> --></td>

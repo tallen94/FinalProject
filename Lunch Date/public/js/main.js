@@ -78,18 +78,33 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	})
 }])
 
-.controller("HomeCtrl", ['$scope', '$interval', function($scope, $interval) {
+.controller("HomeCtrl", ['$scope', '$interval', '$q', function($scope, $interval, $q) {
+
+	$scope.dates = [];
+	var DatesDfd = $q.defer();
+
 	var tick = function() {
 		$scope.timeNow = Date.now();
 		var query = new Parse.Query(LunchDate);
-	}
+		query.find().then(function(results) {
+			DatesDfd.resolve(results);
+		})
+	};
 
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
-		tick();
-		$interval(tick, 1000 * 60);
-	})
+	DatesDfd.promise.then(function(dates) {
+		dates.forEach(function(date) {
+			var item = {
+				resturaunt: date.get('resturaunt'),
+				date: date.get('date'),
+				time: date.get('time'),
+				desc: date.get('desc')
+			}
+			$scope.dates.push(item);
+		})	
+	});
 
-	
+	tick();
+	$interval(tick, 1000 * 60);
 }])
 
 .controller("LoginCtrl", ['$scope', '$state', function($scope, $state) {
@@ -136,11 +151,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	}	
 }])
 
-.controller("CreateLunchDateCtrl", ['$scope', '$http','$uibModal', function ($scope, $http, $uibModal) {
+.controller("CreateLunchDateCtrl", ['$scope', '$http','$uibModal', '$state', function($scope, $http, $uibModal, $state) {
     // need to include ui bootstrap js in js files for modal to work
 
     $scope.getYelpData = function () {
-        console.log("ng-click works");
         if ($scope.yelpSearch == undefined) {
             $scope.yelpSearch = '';
         }
@@ -153,6 +167,44 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
             }
         };
         console.log($scope.yelpSearch);
+
+        Parse.Cloud.run('yelpApi', request, {
+            success: function (response) {
+                console.log(JSON.parse(response.body))
+
+                $scope.yelpResponses = JSON.parse(response.body).businesses;
+                var modalInstance = $uibModal.open({
+                    templateUrl: 'partials/yelpmodal.html',
+                    controller: 'YelpModalCtrl',
+                    scope: $scope
+                });
+
+                modalInstance.result.then(function (selectedRestaurant) {
+                    $scope.restaurant = selectedRestaurant;
+                    console.log($scope.restaurant);
+
+                })
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
+    }
+}])
+
+.controller("YelpModalCtrl", ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
+    $scope.selectedRestaurant = {};
+
+    $scope.ok = function () {
+        $uibModalInstance.close($scope.selectedRestaurant);
+    };
+
+    $scope.cancel = function () {
+        $uibModalInstance.dismiss('cancel');
+    }
+
+    $scope.select = function (restaurant) {
+        $scope.selectedRestaurant = restaurant;
     }
 
     $scope.createDate = function(resturaunt, date, time, desc) {
@@ -164,6 +216,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     	lunchDate.save(null, {
     		success: function(res) {
     			console.log(res);
+    			$state.go('home');
     		},
     		error: function(res, error) {
     			console.log(error);

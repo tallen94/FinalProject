@@ -17,6 +17,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 .config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider
 
+		.state('main', {
+			url: '/',
+			controller: 'MainCtrl'
+		})
 		.state('home', {
 			url: '/home',
 			templateUrl: 'partials/home.html',
@@ -36,9 +40,14 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 			url: '/create-date',
 			templateUrl: 'partials/createlunchdate.html',
 			controller: 'CreateLunchDateCtrl'
+		})
+		.state('profile', {
+			url: '/profile',
+			templateUrl: 'partials/profile.html',
+			controller: 'ProfileCtrl'
 		});
 
-		$urlRouterProvider.otherwise('/login');
+		$urlRouterProvider.otherwise('/');
 })
 
 .controller("MainCtrl", ['$scope', '$http', '$state', function($scope, $http, $state) {
@@ -49,6 +58,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 	} else {
 		$state.go('login');
 	}
+	
 
 	// var request = {
 	// 	method: 'GET',
@@ -67,6 +77,13 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 	// 		console.log("ERROR: " + error);
 	// 	}
 	// });
+	$scope.logout = function() {
+		if($scope.currentUser) {
+			Parse.User.logOut();
+			$state.go('login');
+			$scope.currentUser = null;
+		}
+	}
 }])
 
 .controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
@@ -165,6 +182,9 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
         //    }
         //});
     }
+}])
+.controller("ProfileCtrl", ['$scope', function($scope) {
+	
 }])
 
 .directive('sameAs', function() {

@@ -155,6 +155,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet
     // need to include ui bootstrap js in js files for modal to work
 
     $scope.currDate = {
+    	search: '',
         restaurant: '',
         date: '',
         time: '',
@@ -162,14 +163,14 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet
     }
 
     $scope.getYelpData = function () {
-        if ($scope.currDate.restaurant == undefined) {
-            $scope.currDate.restaurant = '';
+        if ($scope.currDate.search == undefined) {
+            $scope.currDate.search = '';
         }
         var request = {
             method: 'GET',
             url: 'search',
             params: {
-                term: $scope.currDate.restaurant,
+                term: $scope.currDate.search,
                 location: 'Seattle'
             }
         };

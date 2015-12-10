@@ -105,13 +105,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	// 		console.log("ERROR: " + error);
 	// 	}
 	// });
-	$scope.logout = function() {
-		if($scope.currentUser) {
-			Parse.User.logOut();
-			$state.go('login');
-			$scope.currentUser = null;
-		}
-	}
+	
 }])
 
 .controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
@@ -203,7 +197,17 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     }
 }])
 .controller("ProfileCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
-	
+	$scope.logout = function() {
+		console.log("logout has been called");
+		console.log($rootScope.currentUser);
+		if($rootScope.currentUser) {
+			console.log("user authenticatd");
+			Parse.User.logOut();
+			$rootScope.currentUser = null;
+			$state.go('login');
+			
+		}
+	}
 }])
 
 .directive('sameAs', function() {

@@ -14,7 +14,7 @@
 </g>
 </svg>
 
-<button type="button" class="btn btn-default" id="newDate">Create a Date</button>
+<button type="button" class="btn btn-default" id="newDate" ui-sref="create-date">Create a Date</button>
 <div class="row">
 	<h1>Dates near you: 2:34 pm in Seattle</h1> 
 	<div class="col-sm-8" id="datesBox">
@@ -38,11 +38,13 @@
 		</div>
 	</div>
 	<div class="col-sm-4">
-		<h2>Options</h2>
-		<h3>Sort By:</h3>
-		<input type="radio" ng-model="sortCriteria" value="null">Relevance<br>
-		<input type="radio" ng-model="sortCriteria" value="distance">Distance<br>
-		<input type="radio" ng-model="sortCriteria" value="time">Time<br>
-		<div id="map-container" ng-show="true"></div>
+		<div id="options">
+			<h2>Options</h2>
+			<h3>Sort By:</h3>
+			<input type="radio" ng-model="sortCriteria" value="null">Relevance<br>
+			<input type="radio" ng-model="sortCriteria" value="distance">Distance<br>
+			<input type="radio" ng-model="sortCriteria" value="time">Time<br>
+			<div id="map-container" ng-show="true"></div>
+		</div>
 	</div>
 </div>

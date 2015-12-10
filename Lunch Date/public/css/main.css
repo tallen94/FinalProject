@@ -91,12 +91,21 @@ input.ng-invalid.ng-touched {
 	padding-right: 3px;
 }
 
+svg {
+	height: 20px;
+	padding: 0px;
+}
+
 #newDate {
 	margin-left: 20px;
 }
 
 #datesBox {
 	background-color: #E9EAEE;
+}
+
+#options {
+	margin-left: 30px;
 }
 
 #map-container {

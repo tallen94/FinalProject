@@ -52,10 +52,13 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	$scope.currentUser = Parse.User.current();
 
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) { 
+		console.log("START " + toState.name);
+		console.log()
 		switch(toState.name) {
 			case 'signup':
 			case 'login':
 				if($scope.currentUser) {
+					event.preventDefault();
 					$state.go('home');
 				}
 				break;
@@ -63,6 +66,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 			case 'profile':
 			case 'create-date':
 				if($scope.currentUser == null) {
+					event.preventDefault();
 					$state.go('login');
 				}
 				break;
@@ -70,6 +74,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	})
 
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+		console.log("SUCCESS " + toState.name);
 		switch(toState.name) {
 			case 'signup':
 			case 'login':

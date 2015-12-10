@@ -3,7 +3,7 @@
 var LunchDate = Parse.Object.extend("LunchDate");
 var currentUser;
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet-directive'])
+angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 .run(function() {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
 	currentUser = Parse.User.current();
@@ -76,23 +76,13 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet
 				break;
 		}
 	})
+	
 }])
 
 .controller("HomeCtrl", ['$scope', '$interval', '$q', '$rootScope', function($scope, $interval, $q, $rootScope) {
 
 	$scope.dates = [];
 	var DatesDfd = $q.defer();
-	navigator.geolocation.getCurrentPosition(function(pos) {
-		var lat = pos.coords.latitude;
-		var lng = pos.coords.longitude;
-		angular.extend($rootScope, {
-			center: {
-				lat: lat,
-				lng: lng,
-				zoom: 4
-			}
-		})
-	})
 
 	var tick = function() {
 		$scope.timeNow = Date.now();
@@ -116,8 +106,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'leaflet
 
 	tick();
 	$interval(tick, 1000 * 60);
-
-	
 }])
 
 .controller("LoginCtrl", ['$scope', '$state', function($scope, $state) {

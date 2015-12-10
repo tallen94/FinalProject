@@ -41,13 +41,13 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 		$urlRouterProvider.otherwise('/login');
 })
 
-.controller("MainCtrl", ['$scope', '$http', '$state' function($scope, $http, $state) {
+.controller("MainCtrl", ['$scope', '$http', '$state', function($scope, $http, $state) {
 	$scope.tabs;
 	$scope.currentUser = Parse.User.current();
 	if($scope.currentUser) {
 		$state.go('home')
 	} else {
-		$scope.go('login');
+		$state.go('login');
 	}
 
 	// var request = {

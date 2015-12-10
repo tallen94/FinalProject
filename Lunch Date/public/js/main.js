@@ -210,7 +210,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     	var lunchDate = new LunchDate();
     	lunchDate.set('resturaunt', resturaunt);
     	lunchDate.set('date', date);
-    	lunchDate.set('time', desc);
+    	lunchDate.set('time', time);
     	lunchDate.set('desc', desc);
     	lunchDate.save(null, {
     		success: function(res) {

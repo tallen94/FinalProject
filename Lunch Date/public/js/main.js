@@ -43,24 +43,25 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 
 .controller("MainCtrl", ['$scope', '$http', function($scope, $http) {
 	$scope.tabs;
+	$scope.currentUser;
 
-	var request = {
-		method: 'GET',
-		url: 'search',
-		params: {
-			term: 'lunch',
-			location: 'Seattle'
-		}
-	};
+	// var request = {
+	// 	method: 'GET',
+	// 	url: 'search',
+	// 	params: {
+	// 		term: 'lunch',
+	// 		location: 'Seattle'
+	// 	}
+	// };
 
-	Parse.Cloud.run('yelpApi', request, {
-		success: function(response) {
-			console.log(response.body);
-		}, 
-		error: function(error) {
-			console.log(error);
-		}
-	});
+	// Parse.Cloud.run('yelpApi', request, {
+	// 	success: function(response) {
+	// 		console.log("SUCCESS: " + response.body);
+	// 	}, 
+	// 	error: function(error) {
+	// 		console.log("ERROR: " + error);
+	// 	}
+	// });
 }])
 
 .controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
@@ -69,18 +70,33 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 	})
 }])
 
-.controller("LoginCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+.controller("LoginCtrl", ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
 	$scope.showInfo = false;
 
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
 		$rootScope.tabs = ['login', 'signup'];
 	})
+
+	$scope.login = function(email, passwd) {
+		Parse.User.logIn(email, passwd, {
+			success: function(user) {
+				$rootScope.currentUser = user;
+				$state.go('home');
+			},
+			error: function(user, error) {
+				console.log("LOGIN ERROR + " + error);
+			}
+		}) 
+	}
 }])
 
 
-.controller("SignupCtrl", ['$scope', function($scope) {
+.controller("SignupCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
 	$scope.newUser = {};
 
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+		$rootScope.tabs = ['login', 'signup'];
+	})
 
 	$scope.signup = function(photo, fName, lName, passwd, email) {
 		if(photo == null) {
@@ -89,8 +105,19 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize']).run(function() {
 		var user = new Parse.User();
 		user.set('fName', fName);
 		user.set('lName', lName);
-		user.set('email', email);
+		user.set('username', email);
+		user.set('password', passwd);
 		user.set('photo', photo);
+
+		user.signUp(null, {
+			success: function(user) {
+				console.log(user);
+				$rootScope.currentUser = user;
+			},
+			error: function(user, error) {
+				console.log("Signup error: " + error)
+			}
+		});
 	}	
 }])
 

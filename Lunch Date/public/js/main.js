@@ -181,11 +181,12 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
                 location: 'Seattle'
             }
         };
-
+        console.log($scope.yelpSearch);
         Parse.Cloud.run('yelpApi', request, {
             success: function (response) {
-                console.log(response.body);
-                $scope.yelpResponses = response.body;
+                console.log(JSON.parse(response.body))
+
+                $scope.yelpResponses = JSON.parse(response.body).businesses;
                 var modalInstance = $uibModal.open({
                     templateUrl: 'partials/yelpmodal.html',
                     controller: 'YelpModalCtrl',

@@ -6,6 +6,7 @@
     <table class="table">
         <tr ng-repeat="data in yelpResponses | orderBy: '-rating' | limitTo: 20" ng-class="{'selected-row':selectedTrack === track}" ng-click="select(track)">
             <td><img class="art-icon" ng-src="{{data.image_url !== null ? data.image_url : 'img/note.png'}}"></td>
+            <td><img ng-src="{{data.rating_img_url}}" /></td>
             <td><i>{{data.name}}</i> by {{data.snippet_text}}</td>
         </tr>
     </table>

@@ -61,6 +61,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 				break;
 			case 'home':
 			case 'profile':
+			case 'create-date':
 				if($scope.currentUser == null) {
 					$state.go('login');
 				}
@@ -76,6 +77,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 				break;
 			case 'home':
 			case 'profile':
+			case 'create-date':
 				$scope.tabs = ['home', 'profile'];
 				break;
 		}

@@ -102,14 +102,12 @@ svg {
 
 #datesBox {
 	background-color: #E9EAEE;
+	overflow: scroll;
+	max-height: 400px; 
 }
 
 #options {
 	margin-left: 30px;
-}
-
-#map-container {
-	height: 200px;
 }
 
 #logout {

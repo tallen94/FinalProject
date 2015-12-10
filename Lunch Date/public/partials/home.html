@@ -16,7 +16,7 @@
 
 	<button type="button" class="btn btn-default" id="newDate" ui-sref="create-date">Create a Date</button>
 	<div class="row">
-		<h1>Dates near you: 2:34 pm in Seattle</h1> 
+		<h1>Dates near you: {{timeNow | date: 'HH:mm:ss'}} in Seattle</h1> 
 		<div class="col-sm-8" id="datesBox">
 			<div>
 				<table class="table">

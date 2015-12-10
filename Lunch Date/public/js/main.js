@@ -50,6 +50,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 .controller("MainCtrl", ['$scope', '$http', '$state', function($scope, $http, $state) {
 	$scope.tabs;
 	$scope.currentUser = Parse.User.current();
+	$scope.currentLocation = navigator.geolocation;
 
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) { 
 		console.log("START " + toState.name);
@@ -75,6 +76,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
 		console.log("SUCCESS " + toState.name);
+
 		switch(toState.name) {
 			case 'signup':
 			case 'login':
@@ -108,8 +110,16 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	
 }])
 
-.controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+.controller("HomeCtrl", ['$scope', '$rootScope', '$interval', function($scope, $rootScope, $interval) {
+	console.log($rootScope.currentLocation);
+	var tick = function() {
+		$scope.timeNow = Date.now();
+	}
 
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+		tick();
+		$interval(tick, 1000);
+	})
 
 }])
 

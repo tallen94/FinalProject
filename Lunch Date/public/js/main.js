@@ -11,16 +11,13 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?acce
     accessToken: 'pk.eyJ1IjoiamFrZXJzbm9ydGgiLCJhIjoiY2lmeDFkbWdzM200b3Vpa3J1c3ZpeGlvZiJ9.IoutzB1Q6QO_BFwIMelV2w'
 }).addTo(map);
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(function() {
+angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
+.run(function() {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
 })
 .config(function($stateProvider, $urlRouterProvider) {
 	$stateProvider
 
-		.state('main', {
-			url: '/',
-			controller: 'MainCtrl'
-		})
 		.state('home', {
 			url: '/home',
 			templateUrl: 'partials/home.html',
@@ -47,18 +44,51 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 			controller: 'ProfileCtrl'
 		});
 
-		$urlRouterProvider.otherwise('/');
+		$urlRouterProvider.otherwise('/login');
 })
 
 .controller("MainCtrl", ['$scope', '$http', '$state', function($scope, $http, $state) {
 	$scope.tabs;
 	$scope.currentUser = Parse.User.current();
-	if($scope.currentUser) {
-		$state.go('home')
-	} else {
-		$state.go('login');
-	}
-	
+	$scope.currentLocation = navigator.geolocation;
+
+	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) { 
+		console.log("START " + toState.name);
+		console.log()
+		switch(toState.name) {
+			case 'signup':
+			case 'login':
+				if($scope.currentUser) {
+					event.preventDefault();
+					$state.go('home');
+				}
+				break;
+			case 'home':
+			case 'profile':
+			case 'create-date':
+				if($scope.currentUser == null) {
+					event.preventDefault();
+					$state.go('login');
+				}
+				break;
+		}
+	})
+
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
+		console.log("SUCCESS " + toState.name);
+
+		switch(toState.name) {
+			case 'signup':
+			case 'login':
+				$scope.tabs = ['login', 'signup'];
+				break;
+			case 'home':
+			case 'profile':
+			case 'create-date':
+				$scope.tabs = ['home', 'profile'];
+				break;
+		}
+	})
 
 	// var request = {
 	// 	method: 'GET',
@@ -77,27 +107,24 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 	// 		console.log("ERROR: " + error);
 	// 	}
 	// });
-	$scope.logout = function() {
-		if($scope.currentUser) {
-			Parse.User.logOut();
-			$state.go('login');
-			$scope.currentUser = null;
-		}
-	}
+	
 }])
 
-.controller("HomeCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
-		$rootScope.tabs = ['home', 'profile', 'logout'];
+.controller("HomeCtrl", ['$scope', '$rootScope', '$interval', function($scope, $rootScope, $interval) {
+	console.log($rootScope.currentLocation);
+	var tick = function() {
+		$scope.timeNow = Date.now();
+	}
+
+	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+		tick();
+		$interval(tick, 1000);
 	})
+
 }])
 
 .controller("LoginCtrl", ['$scope', '$rootScope', '$state', function($scope, $rootScope, $state) {
 	$scope.showInfo = false;
-
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
-		$rootScope.tabs = ['login', 'signup'];
-	})
 
 	$scope.login = function(email, passwd) {
 		Parse.User.logIn(email, passwd, {
@@ -115,10 +142,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
 
 .controller("SignupCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
 	$scope.newUser = {};
-
-	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
-		$rootScope.tabs = ['login', 'signup'];
-	})
 
 	$scope.signup = function(photo, fName, lName, passwd, email) {
 		if(photo == null) {
@@ -197,8 +220,18 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
         $scope.selectedRestaurant = restaurant;
     }
 }])
-.controller("ProfileCtrl", ['$scope', function($scope) {
-	
+.controller("ProfileCtrl", ['$scope', '$rootScope', function($scope, $rootScope) {
+	$scope.logout = function() {
+		console.log("logout has been called");
+		console.log($rootScope.currentUser);
+		if($rootScope.currentUser) {
+			console.log("user authenticatd");
+			Parse.User.logOut();
+			$rootScope.currentUser = null;
+			$state.go('login');
+			
+		}
+	}
 }])
 
 .directive('sameAs', function() {
@@ -222,4 +255,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap']).run(fun
             }
         }
     };
-});
+})
+
+

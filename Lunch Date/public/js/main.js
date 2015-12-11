@@ -341,7 +341,11 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 					latitude: item.resturaunt.location.coordinate.latitude
 				},
 				zoom: 14,
-				idKey: idKey
+				idKey: idKey,
+				marker: {
+					longitude: item.resturaunt.location.coordinate.longitude,
+					latitude: item.resturaunt.location.coordinate.latitude
+				}
 			}
 			$scope.dates.push(item);
 			idKey++;

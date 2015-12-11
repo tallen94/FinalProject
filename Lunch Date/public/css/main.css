@@ -103,7 +103,7 @@ svg {
 #datesBox {
 	background-color: #E9EAEE;
 	overflow: scroll;
-	max-height: 400px; 
+	max-height: 500px; 
 }
 
 #options {
@@ -129,19 +129,32 @@ svg {
 }
 
 .angular-google-map-container {
-	height: 400px;
-	width: 350px;
+	height: 200px;
+	width: 175px;
 	margin-top: 20px;
 	margin-bottom: 20px;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .datePic {
 	height: 100px;
 }
 
+.date {
+	border-bottom: 1px solid grey;
+}
+
 @media (max-width: 768px) {
 	.title {
 		color: transparent;
+	}
+}
+
+@media screen and (min-width: 768px) {
+	.angular-google-map-container {
+		height: 400px;
+		width: 350px;
 	}
 }
 

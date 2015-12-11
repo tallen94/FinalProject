@@ -12,6 +12,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 })
 .config(function($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
 
+	// Load the google maps api
 	uiGmapGoogleMapApiProvider.configure({
 		key: 'AIzaSyCB5idAjuihsRtMsBk1xip8IhD68K09jkU',
 		v: '3.20',
@@ -52,6 +53,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 .controller("MainCtrl", ['$scope', '$http', '$state', function($scope, $http, $state) {
 	$scope.tabs;
 
+	// Listen for page changes to make sure they cant access content if not logged int
+	// or prevent them from seeing login every time they visit if they already logged in.
 	$scope.$on('$stateChangeStart', function(event, toState, toParams, fromState, fromParams) { 
 		switch(toState.name) {
 			case 'signup':
@@ -72,6 +75,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 		}
 	})
 
+	// Set tabs on the page
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) { 
 		switch(toState.name) {
 			case 'signup':
@@ -99,6 +103,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
     	MapDfd.resolve(pos);
     })
 
+    // Handle setting the center of the map to the current position
     MapDfd.promise.then(function(pos) {
     	$scope.map.center = {
     		latitude: pos.coords.latitude, 
@@ -106,6 +111,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
     	};
     });
       
+    // Get new Lunch Dates every minute
 	var tick = function() {
 		$scope.timeNow = Date.now();
 		var query = new Parse.Query(LunchDate);
@@ -114,6 +120,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 		})
 	};
 
+	// Load the page with the current Lunch Dates
 	DatesDfd.promise.then(function(dates) {
 		var idKey = 1;
 		dates.forEach(function(date) {
@@ -125,6 +132,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 				user: date.get('user')
 			}
 			$scope.dates.push(item);
+			// coordinates of the resturaunt
 			var resturauntCoords = {
 				coords: {
 					longitude: item.resturaunt.location.coordinate.longitude,
@@ -230,6 +238,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
         };
         console.log($scope.currDate.restaurant);
 
+        // This authenticates the yelp request with oAuth and keys we were given.
+        // I did this on a node server to keep the keys hidden from the client.
         Parse.Cloud.run('yelpApi', request, {
             success: function (response) {
                 $scope.loading = false;
@@ -310,6 +320,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 	var DateDfd = $q.defer();
 	$scope.dates = [];
 
+	// Get the current user data
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 		$scope.currentUser.fName = currentUser.get('fName');
 		$scope.currentUser.lName = currentUser.get('lName');
@@ -321,6 +332,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 		})
 	})
 
+	// Handle loading dates onto the page
 	DateDfd.promise.then(function(data) {
 		var idKey = 1;
 		data.forEach(function(date) {
@@ -357,6 +369,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 	}
 }])
 
+
+// Used for password comparison
 .directive('sameAs', function() {
     return {
         require: 'ngModel',

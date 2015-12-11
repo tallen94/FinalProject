@@ -21,19 +21,21 @@
 			<div ng-if="dates">
 				<table class="table">
 					<tr ng-repeat="date in dates | orderBy: sortCriteria | filter: food">
-						<td><!-- <img src="{{date.photo}}"> --></td>
+						<td><img class="datePic" ng-src="{{date.user.get('photo')}}"></td>
 						<td>
-							<h3>{{date.resturaunt}}</h3>
+							<h1>{{date.user.get('fName')}} {{date.user.get('lName')}}</h1>
+							<h3>{{date.resturaunt.name}}</h3>
 							<p>{{date.desc}}</p>
 						</td>
 						<td>
 							<h3>Happening At:</h3>
-							<p>{{date.time}}</p>
-							<br>
-							<p>{{date.date}}
-							<br>
+							<p>{{date.time | date: 'hh:mm'}}</p>
+							<p>{{date.date}}</p>
 							<h3>Location:</h3>
-							<p>{{date.resturaunt}}</p>
+							<p>
+								{{date.resturaunt.location.address[0]}}<br>
+								{{date.resturaunt.location.address[1]}}
+							</p>
 						</td>
 					</tr>
 				</table>
@@ -46,6 +48,9 @@
 				<input type="radio" ng-model="sortCriteria" value="resturaunt">Restaurant<br>
 				<input type="radio" ng-model="sortCriteria" value="date">Date<br>
 				<input type="radio" ng-model="sortCriteria" value="time">Time<br>
+				<ui-gmap-google-map center="map.center" zoom="map.zoom" options="options">
+					<ui-gmap-marker ng-repeat="marker in markers" coords='marker.coords' idKey='marker.idKey'></ui-gmap-marker>
+				</ui-gmap-google-map>
 			</div>
 		</div>
 	</div>

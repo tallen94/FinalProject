@@ -3,12 +3,19 @@
 var LunchDate = Parse.Object.extend("LunchDate");
 var currentUser;
 
-angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
+angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapgoogle-maps'])
 .run(function() {
 	Parse.initialize("uIVTEdH6vgBbc0QWNwWf7mJG3i70feZ39xzm71v6", "aoAZx3sogatBjPOoBQ7kghv0xbhX07W0st5lEDRK");
 	currentUser = Parse.User.current();
 })
-.config(function($stateProvider, $urlRouterProvider) {
+.config(function($stateProvider, $urlRouterProvider, uiGmapGoogleMapApiProvider) {
+
+	uiGmapGoogleMapApiProvider.configure({
+		key: 'AIzaSyCB5idAjuihsRtMsBk1xip8IhD68K09jkU',
+		v: '3.20',
+		libraries: 'drawing'
+	});
+
 	$stateProvider
 
 		.state('home', {
@@ -79,11 +86,25 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	
 }])
 
-.controller("HomeCtrl", ['$scope', '$interval', '$q', '$rootScope', function($scope, $interval, $q, $rootScope) {
+.controller("HomeCtrl", ['$scope', '$interval', '$q', '$rootScope', 'uiGmapGoogleMapApi', function($scope, $interval, $q, $rootScope, uiGmapGoogleMapApi) {
 
 	$scope.dates = [];
+	$scope.markers = [];
 	var DatesDfd = $q.defer();
+	var MapDfd = $q.defer();
+	$scope.map = {center: {latitude: 51.219053, longitude: 4.404418 }, zoom: 10 };
+    $scope.options = {scrollwheel: false};
+    navigator.geolocation.getCurrentPosition(function(pos) {
+    	MapDfd.resolve(pos);
+    })
 
+    MapDfd.promise.then(function(pos) {
+    	$scope.map.center = {
+    		latitude: pos.coords.latitude, 
+    		longitude: pos.coords.longitude
+    	};
+    });
+      
 	var tick = function() {
 		$scope.timeNow = Date.now();
 		var query = new Parse.Query(LunchDate);
@@ -93,14 +114,25 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 	};
 
 	DatesDfd.promise.then(function(dates) {
+		var idKey = 1;
 		dates.forEach(function(date) {
 			var item = {
-				resturaunt: date.get('resturaunt'),
+				resturaunt: JSON.parse(date.get('resturaunt')),
 				date: date.get('date'),
 				time: date.get('time'),
-				desc: date.get('desc')
+				desc: date.get('desc'),
+				user: date.get('user')
 			}
 			$scope.dates.push(item);
+			var resturauntCoords = {
+				coords: {
+					longitude: item.resturaunt.location.coordinate.longitude,
+					latitude: item.resturaunt.location.coordinate.latitude
+				},
+				idKey: idKey
+			}
+			$scope.markers.push(resturauntCoords);
+			idKey++;
 		})	
 	});
 
@@ -127,7 +159,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 }])
 
 
-.controller("SignupCtrl", ['$scope', function($scope) {
+.controller("SignupCtrl", ['$scope', '$state', function($scope, $state) {
 	$scope.newUser = {};
 
 	$scope.signup = function(photo, fName, lName, passwd, email) {
@@ -144,6 +176,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 		user.signUp(null, {
 			success: function(user) {
 				currentUser = user;
+				$state.go('home');
+
 			},
 			error: function(user, error) {
 				console.log("Signup error: " + error)
@@ -219,7 +253,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
 
         var lunchDate = new LunchDate();
         lunchDate.set('user', Parse.User.current());
-        lunchDate.set('resturaunt', restaurant);
+        lunchDate.set('resturaunt', JSON.stringify(restaurant));
         lunchDate.set('date', date.toDateString());
         lunchDate.set('time', time.toTimeString());
         lunchDate.set('desc', desc);
@@ -253,7 +287,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
         console.log("selected: " + restaurant.name);
         $scope.selectedRestaurant = restaurant;
 
-        $scope.currDate.restaurant = restaurant.name;
+        $scope.currDate.restaurant = restaurant;
     }
 
     //$scope.createDate = function(resturaunt, date, time, desc) {
@@ -275,13 +309,33 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
     //}
 }])
 
-.controller("ProfileCtrl", ['$scope', '$state', function($scope, $state) {
+.controller("ProfileCtrl", ['$scope', '$state', '$q', function($scope, $state, $q) {
 	$scope.currentUser = {};
+	var DateDfd = $q.defer();
+	$scope.dates = [];
 
 	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
 		$scope.currentUser.fName = currentUser.get('fName');
 		$scope.currentUser.lName = currentUser.get('lName');
 		$scope.currentUser.photo = currentUser.get('photo');
+		var query = new Parse.Query(LunchDate);
+		query.equalTo('user', currentUser);
+		query.find().then(function(response) {
+			DateDfd.resolve(response);
+		})
+	})
+
+	DateDfd.promise.then(function(data) {
+		data.forEach(function(date) {
+			var item = {
+				resturaunt: date.get('resturaunt'),
+				date: date.get('date'),
+				time: date.get('time'),
+				desc: date.get('desc'),
+				user: date.get('user')
+			}
+			$scope.dates.push(item);
+		})
 	})
 
 	$scope.logout = function() {

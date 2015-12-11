@@ -128,6 +128,16 @@ svg {
 	text-align: center;
 }
 
+.angular-google-map-container {
+	height: 400px;
+	width: 350px;
+	margin-top: 20px;
+}
+
+.datePic {
+	height: 100px;
+}
+
 @media (max-width: 768px) {
 	.title {
 		color: transparent;

@@ -3,6 +3,27 @@
 	<h1>Your Profile</h1>
 	<img src="{{currentUser.photo}}" id="profileDisp">
 	<h2>{{currentUser.fName}} {{currentUser.lName}}</h2>
+	<div ng-if="dates">
+				<table class="table">
+					<tr ng-repeat="date in dates | orderBy: sortCriteria | filter: food">
+						<td><!-- <img src="{{date.photo}}"> --></td>
+						<td>
+							<h1>{{date.user.get('fName')}} {{date.user.get('lName')}}</h1>
+							<h3>{{date.resturaunt.name}}</h3>
+							<p>{{date.desc}}</p>
+						</td>
+						<td>
+							<h3>Happening At:</h3>
+							<p>{{date.time}}</p>
+							<br>
+							<p>{{date.date}}
+							<br>
+							<h3>Location:</h3>
+							<p>{{date.resturaunt}}</p>
+						</td>
+					</tr>
+				</table>
+			</div>
 	<button type="button" class="btn btn-default" id="logout" ng-click="logout()">Logout</button>
 </div>
 	

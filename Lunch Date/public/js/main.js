@@ -226,7 +226,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap'])
         lunchDate.save(null, {
             success: function (res) {
                 console.log(res);
-                alert("Your date has been saved")
+                $state.go('login');
             },
             error: function (res, error) {
                 console.log(error);

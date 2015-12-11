@@ -3,28 +3,31 @@
 	<h1>Your Profile</h1>
 	<img src="{{currentUser.photo}}" id="profileDisp">
 	<h2>{{currentUser.fName}} {{currentUser.lName}}</h2>
-	<div ng-if="dates">
-				<table class="table">
-					<tr ng-repeat="date in dates | orderBy: sortCriteria | filter: food">
-						<td><img class="datePic" ng-src="{{date.user.get('photo')}}"></td>
-						<td>
-							<h1>{{date.user.get('fName')}} {{date.user.get('lName')}}</h1>
-							<h3>{{date.resturaunt.name}}</h3>
-							<p>{{date.desc}}</p>
-						</td>
-						<td>
-							<h3>Happening At:</h3>
-							<p>{{date.time | date: 'hh:mm'}}</p>
-							<p>{{date.date}}</p>
-							<h3>Location:</h3>
-							<p>
-								{{date.resturaunt.location.address[0]}}<br>
-								{{date.resturaunt.location.address[1]}}
-							</p>
-						</td>
-					</tr>
-				</table>
-			</div>
+	<table id="datesBox" ng-if="dates" class="table">
+		<tr ng-repeat="date in dates | orderBy: sortCriteria | filter: food">
+			<td>
+				<img class="datePic" ng-src="{{date.user.get('photo')}}">
+				<h1>{{date.user.get('fName')}} {{date.user.get('lName')}}</h1>
+				<h3>{{date.resturaunt.name}}</h3>
+				<p>{{date.desc}}</p>
+			</td>
+			<td>
+				<ui-gmap-google-map class="profileMap" center="date.map.center" zoom="date.map.zoom">
+					<ui-gmap-marker coords='date.map.center' idKey='date.map.idKey'></ui-gmap-marker>
+				</ui-gmap-google-map>
+			</td>
+			<td>
+				<h3>Happening At:</h3>
+				<p>{{date.time | date: 'hh:mm'}}</p>
+				<p>{{date.date}}</p>
+				<h3>Location:</h3>
+				<p>
+					{{date.resturaunt.location.address[0]}}<br>
+					{{date.resturaunt.location.address[1]}}
+				</p>
+			</td>
+		</tr>
+	</table>
 	<button type="button" class="btn btn-default" id="logout" ng-click="logout()">Logout</button>
 </div>
 	

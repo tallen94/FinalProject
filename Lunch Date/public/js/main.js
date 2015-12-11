@@ -93,7 +93,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 	var DatesDfd = $q.defer();
 	var MapDfd = $q.defer();
 	$scope.map = {center: {latitude: 51.219053, longitude: 4.404418 }, zoom: 10 };
-    $scope.options = {scrollwheel: false};
     navigator.geolocation.getCurrentPosition(function(pos) {
     	MapDfd.resolve(pos);
     })
@@ -310,6 +309,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 }])
 
 .controller("ProfileCtrl", ['$scope', '$state', '$q', function($scope, $state, $q) {
+
 	$scope.currentUser = {};
 	var DateDfd = $q.defer();
 	$scope.dates = [];
@@ -326,15 +326,25 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 	})
 
 	DateDfd.promise.then(function(data) {
+		var idKey = 1;
 		data.forEach(function(date) {
 			var item = {
-				resturaunt: date.get('resturaunt'),
+				resturaunt: JSON.parse(date.get('resturaunt')),
 				date: date.get('date'),
 				time: date.get('time'),
 				desc: date.get('desc'),
-				user: date.get('user')
+				user: date.get('user'),
+			}
+			item.map = {
+				center: {
+					longitude: item.resturaunt.location.coordinate.longitude,
+					latitude: item.resturaunt.location.coordinate.latitude
+				},
+				zoom: 14,
+				idKey: idKey
 			}
 			$scope.dates.push(item);
+			idKey++;
 		})
 	})
 

@@ -1,3 +1,5 @@
+// Trevor Allen, Jooneil Ahn, John Akers, Chan Im
+
 "use strict";
 
 var LunchDate = Parse.Object.extend("LunchDate");
@@ -186,13 +188,14 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 }])
 
 .controller("CreateLunchDateCtrl", ['$scope', '$http','$uibModal', '$state', function($scope, $http, $uibModal, $state) {
-    // need to include ui bootstrap js in js files for modal to work
-    $scope.time = new Date();
+    // Shows loading wheel when fetching data (default hidden);
+    $scope.loading = false;
 
+    // Settings for time and date picker
+    $scope.time = new Date();
     $scope.hstep = 1;
     $scope.mstep = 1;
     $scope.ismeridian = true;
-
     $scope.date = new Date();
     $scope.open = function ($event) {
         $scope.status.opened = true;
@@ -200,6 +203,8 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
     $scope.status = {
         opened: false
     };
+
+    // User input for creating a date
     $scope.currDate = {
     	search: '',
         restaurant: '',
@@ -208,7 +213,10 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
         desc: ''
     }
 
+    // Gets data from yelp using the search term provided by user.
     $scope.getYelpData = function () {
+        $scope.loading = true;
+        // Default retrieves top restaurants if no term is provided.
         if ($scope.currDate.search == undefined) {
             $scope.currDate.search = '';
         }
@@ -224,6 +232,7 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 
         Parse.Cloud.run('yelpApi', request, {
             success: function (response) {
+                $scope.loading = false;
                 console.log(JSON.parse(response.body))
 
                 $scope.yelpResponses = JSON.parse(response.body).businesses;
@@ -241,10 +250,12 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
             },
             error: function (error) {
                 console.log(error);
+                $scope.loading = false;;
             }
         });
     }
 
+    // Creates a new date with the given user input and saves it to Parse.
     $scope.createDate = function (restaurant, date, time, desc) {
         console.log("date: " + restaurant + ", " + date + ", " + time + ", " + desc);
         console.log(date.toDateString());
@@ -272,15 +283,18 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 .controller("YelpModalCtrl", ['$scope', '$uibModalInstance', function ($scope, $uibModalInstance) {
     $scope.selectedRestaurant = {};
 
+    // Closes modal and saves selected restaurant.
     $scope.ok = function () {
         $uibModalInstance.close($scope.selectedRestaurant);
         
     };
 
+    // Closes modal.
     $scope.cancel = function () {
         $uibModalInstance.dismiss('cancel');
     }
 
+    // Selects the restaurant.
     $scope.select = function (restaurant) {
         console.log(restaurant);
         console.log("selected: " + restaurant.name);
@@ -288,24 +302,6 @@ angular.module('LunchDate', ['ui.router', 'ngSanitize', 'ui.bootstrap', 'uiGmapg
 
         $scope.currDate.restaurant = restaurant;
     }
-
-    //$scope.createDate = function(resturaunt, date, time, desc) {
-    //	var lunchDate = new LunchDate();
-    //	lunchDate.set('resturaunt', resturaunt);
-    //	lunchDate.set('date', date);
-    //	lunchDate.set('time', time);
-    //	lunchDate.set('desc', desc);
-    //	lunchDate.save(null, {
-    //		success: function(res) {
-    //			console.log(res);
-    //			$state.go('home');
-    //		},
-    //		error: function(res, error) {
-    //			console.log(error);
-    //		}
-    //	});
-
-    //}
 }])
 
 .controller("ProfileCtrl", ['$scope', '$state', '$q', function($scope, $state, $q) {

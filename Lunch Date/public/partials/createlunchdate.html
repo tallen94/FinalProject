@@ -1,91 +1,32 @@
-<style>
-    @import url('https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css');
-    @import url('https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css');
-
-    #btnDiv {
-        margin-top: 7%;
-        text-align: center;
-    }
-
-    #createDate {
-        background: white;
-        border-style: solid;
-        font-size: 20px;
-        padding: 5%;
-    }
-
-    h1 {
-        text-align: center;
-        margin-bottom: 3%;
-        font-size: 36pt;
-    }
-
-
-    #searchButton {
-        background: white;
-        border-style: none;
-        margin-top: 2em;
-        float: left;
-    }
-
-    #top-modal-title {
-        float: left;
-    }
-
-    .top-modal-btn {
-        float: right;
-        margin: 1%;
-    }
-
-    .modal-header div {
-        overflow:hidden;
-    }
-
-    .selected-row {
-	    border: 2px solid black;
-	    border-radius: 4px;
-    }
-
-    #timepicker {
-        margin-left: auto;
-        margin-right: auto;
-    }
-
-    /*#dateContainer {
-        text-align: center;
-        width: 100%;
-    }*/
-</style>
 <div>
-    <h1>Create Lunch Date</h1>
+    <h1 id="createTitle">Create Lunch Date</h1>
     <div class="container">
         <div class="row">
-            <div class="col-xs-3 col-sm-4"></div>
-            <div class="col-xs-6 col-sm-4">
+            <div class="col-xs-2 col-sm-4"></div>
+            <div class="col-xs-8 col-sm-4">
                 <form>
                     <div class="form-group">
                         <label>Search Yelp</label>
                         <input class="form-control" type="text" ng-model="currDate.search"/> 
+                        <div id="loading" ng-show="loading">
+                            <i class="fa fa-spinner fa-pulse"></i>
+                        </div>
                     </div>
                     <div class="form-group" id="restaurant">
                         <label>Resturaunt</label>
                         <input type="text" class="form-control" ng-model="currDate.restaurant.name" required/>
                     </div>
                     <div class="form-group">
-                        <label>Date</label>
-                        <!--<input type="time" class="form-control" data-provide="timepicker" ng-model="currDate.time" required/>-->
-                        <div>
-                            <p class="input-group">
-                                <input type="date" class="form-control" uib-datepicker-popup ng-model="date" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
-                                <span class="input-group-btn">
-                                    <button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
-                                </span>
-                            </p>
+                        <label>Date</label>                
+                        <div class="input-group">
+                            <input type="date" class="form-control" uib-datepicker-popup ng-model="date" is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />
+                            <span class="input-group-btn">
+                                <button id="calendarBtn" type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                            </span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label>Time</label>
-                        <!--<input type="date" data-date-inline-picker="true" class="form-control" ng-model="currDate.date" required/>-->
+                        <label>Time</label>                        
                         <div>
                             <uib-timepicker id="timepicker" ng-model="time" ng-change="changed()" hour-step="hstep" minute-step="mstep" show-meridian="ismeridian"></uib-timepicker>
                         </div>             
@@ -102,7 +43,7 @@
 
                 </form>
             </div>
-            <div class="col-xs-3 col-sm-4">
+            <div class="col-xs-2 col-sm-4">
                 <button id="searchButton" ng-click="getYelpData()">
                     <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
                     width="30.239px" height="30.239px" viewBox="0 0 30.239 30.239" style="enable-background:new 0 0 30.239 30.239;"
